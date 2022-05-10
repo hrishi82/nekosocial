@@ -1,0 +1,135 @@
+
+.sidebar {
+    width: 16rem;
+    transition: all 0.5s ease-out;
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* border: 1px solid var(--seperator-line); */
+    position: sticky;
+    top: 5rem;
+}
+
+
+.sidebar-list-container{
+    list-style: none;
+    padding: 0;
+}
+.sidebar-li-item {
+    font-size: 1.2rem;
+    font-weight: 200;
+    margin: 1rem 0;
+    padding: 0.7rem 0.8rem;
+}
+
+.sidebar-li-item:hover {
+    background-color: var(--light-grey-bg);
+    border-radius: 0.5rem;
+
+}
+
+
+.sidebar-icon-container{
+    margin-right: 1.5rem;
+}
+
+.navlink{
+    text-decoration: none;
+    color: var(--text-default-clr);
+    display: flex;
+}
+.navlink .fa-solid{
+    color: var(--grey-icon);
+}
+
+
+.navlink-active{
+    color: inherit;
+    text-decoration: none;
+    font-weight: 600;
+    display: flex;
+    font-size: 1.3rem;
+}
+.navlink-active .fa-solid{
+    color: var(--primary-clr)
+}
+
+.aside-newpost-btn{
+    margin-top: 1rem;
+    width: 100%;
+}
+
+
+
+/* Search bar */
+
+.search-wrapper{
+    background-color: var(--white-bg);
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.2rem;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    border: 1px solid var(--seperator-line)
+}
+
+.search-bar{
+    border: none;
+    background-color: transparent;
+    padding: 0.6rem 0.6rem;
+    color: var(--text-default-clr);
+    font-size: 1rem;
+    width: 8rem;
+}
+.search-bar:focus{
+    outline: none;
+    background-color: transparent;
+}
+
+.search-bar-btn{
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    margin-left: auto;
+}
+.search-bar-btn, .fa-search{
+    color: var(--text-default-clr);
+}
+
+.sidebar-list-container-bottom{
+    margin-bottom: 3rem;
+}
+
+
+
+
+
+
+
+
+/* Responsive Style */
+
+@media screen and (max-width:800px) {
+    .sidebar {
+        display: none;
+    }
+
+    .sidebar-show {
+        display: block;
+        z-index: 5; 
+        position: absolute;
+        left: 0;
+        padding: 2rem;
+        background-color: var(--white-bg);
+        overflow-y: scroll;
+        width: 100vw;
+        height: 100vh;
+        top: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+}
+
+
