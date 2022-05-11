@@ -1,0 +1,77 @@
+.post-card-container{
+    display: flex;
+    width: 35rem;
+    border-radius: 0.2rem;
+    /* padding: 1rem 1rem 0.5rem 1rem; */
+    padding: 2rem 2rem 1rem 1rem;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    background-color: var(--white-bg);
+    margin: 1.5rem 0
+}
+
+.post-content-box{
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    /* border: 1px solid red; */
+}
+
+.post-input-avtar-box{
+    margin: 0.1rem 1rem 0 0.5rem;
+}
+
+.post-content-header-box{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8rem;
+}
+
+.post-content-header-box-left{
+    display: flex;
+    align-items: center;
+}
+
+.post-content-header-box-left > *{
+    margin-right: 0.5rem;
+}
+
+.post-content-author{
+    font-weight: 600;
+}
+
+.post-content-author-username{
+    color: var(--text-grey);
+    font-weight: 300;
+}
+
+
+.period-seperator{
+    font-size: 0.35rem;
+    color: var(--text-grey);
+}
+
+.post-content-timePosted{
+    font-size: 0.7rem;
+    color: var(--text-grey);
+}
+
+.post-content-header-box-left .fa-ellipsis{
+    color: var(--text-grey);
+}
+
+
+.post-content-body-box{
+    font-size: 0.8rem;
+    font-weight: 300;
+    text-align: justify;
+    margin: 0.5rem 0;
+    width: 100%;
+}
+
+.post-content-buttons-box{
+    display: flex;
+    justify-content: space-between;
+    margin: 0.8rem 0 0.5rem 0;
+}
