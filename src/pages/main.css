@@ -1,0 +1,66 @@
+.home-page-container{
+    display:flex;
+    padding: 1.5rem;
+    max-width: 90rem;
+    margin:auto;
+    margin-top: 2rem;
+    justify-content: center;
+}
+
+.mainfeed-container{
+    margin: 0 2rem;
+}
+
+.mainfeed-info-action-container{
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem 0 0 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    /* border: 1px solid black; */
+}
+
+
+.bookmark-icon{
+    font-weight: 300;
+  }
+
+
+/* Modal */
+.comment-input-master-wrapper {
+    position:fixed;
+    left:0;
+    top:0;
+    width:100vw;
+    height:100vh;
+    display:none;
+    background-color:#000;
+    opacity:0.9;
+    z-index: 2;
+  }
+
+.comment-input-modal-container {
+    position:fixed;
+    left:50%;
+    top:50%;
+    transform:translate(-50%, -50%);
+    display:none;
+    z-index: 3;
+    border-radius: 2rem;
+  }
+  
+
+
+.viewModal{
+      display: block;
+  }
+
+
+
+/* 
+@media screen and (max-width:1000px){
+    .products-container-content{
+        grid-template-columns: 1fr 1fr;
+    }
+} */
+

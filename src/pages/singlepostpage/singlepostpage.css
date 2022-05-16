@@ -1,0 +1,165 @@
+
+/********** Top content box ***********/
+
+.single-post-card-container{
+    width: 35rem;
+    border-radius: 0.2rem;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    background-color: var(--white-bg);
+}
+
+.single-post-card-container-top{
+    padding: 0 1.5rem;
+    border-bottom: 1px solid var(--seperator-line);
+}
+
+.single-post-content-box{
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.single-post-info-nav-box{
+    display: flex;
+    align-items: center;
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 1rem 0;
+}
+
+.single-post-info-nav-box > i{
+    margin-right: 1rem;
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+
+.single-post-input-avtar-box{
+    margin-right: 0.5rem;
+}
+
+.single-post-content-header-box{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8rem;
+}
+
+.single-post-content-header-box-left{
+    display: flex;
+    align-items: center;
+}
+
+.single-post-content-header-box-right{
+    font-size: 1.5rem;
+    color: var(--text-grey);
+}
+
+.single-post-content-author{
+    font-weight: 600;
+}
+
+.single-post-content-author-username{
+    color: var(--text-grey);
+    font-weight: 300;
+}
+
+
+
+.single-post-content-timePosted{
+    font-size: 0.8rem;
+    color: var(--text-grey);
+    margin: 1rem 0;
+}
+
+.single-post-content-header-box-left .fa-ellipsis{
+    color: var(--text-grey);
+}
+
+
+.single-post-content-body-box{
+    font-size: 0.95rem;
+    font-weight: 300;
+    text-align: justify;
+    margin: 0.5rem 0;
+    width: 100%;
+    border-bottom: 1px solid var(--seperator-line);
+}
+
+.single-post-content-like-box{
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--seperator-line);
+    font-size: 0.9rem;
+    text-align: left;
+}
+
+.single-post-content-like{
+    font-weight: 700;
+    margin-right: 0.3rem;
+}
+
+.single-post-content-buttons-box{
+    display: flex;
+    justify-content: space-between;
+    margin: 1.5rem 0 1rem 0;
+}
+
+.single-post-content-buttons-box > i{
+    cursor: pointer;
+    color: var(--text-grey);
+    font-size: 1.3rem;
+}
+
+
+
+
+/********** Comment Input box ***********/
+
+.single-post-card-container-middle{
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--seperator-line);
+}
+
+.single-post-card-add-comment-container{
+    display: flex;
+    align-items: center;
+}
+
+.single-post-add-comment-wrapper{
+    background-color: var(--white-bg);
+    padding: 0.1rem 0.5rem;
+    border-radius: 0.2rem;
+    width: 100%;
+}
+
+.single-post-comment-input{
+    font-size: 0.8rem;
+    font-weight: 300;
+    font-family: 'Poppins', sans-serif;
+    background-color: rgb(238, 238, 238);
+    margin: 0;
+    height: 4rem;
+    overflow-y: scroll;
+    width: 100%;
+    border: none;
+    outline: none;
+    resize: none;
+    
+}
+.single-post-comment-input::-webkit-scrollbar {
+    display: none;
+  }
+  
+.single-post-comment-input:active{
+    border: none;
+    outline: none;
+}
+
+
+ /********** All Comments Box ***********/
+
+ .single-post-card-container-bottom{
+    padding: 0 1.5rem;
+    border-bottom: 1px solid var(--seperator-line);
+}
+

@@ -8,7 +8,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export const PostInput = () => {
-  const { state, dispatch, postData, setPostData, initialPostData } = useData();
+  const { state, dispatch, formData, setFormData, initialFormData } = useData();
   const { token, user } = useAuth();
   const navigate = useNavigate();
 
@@ -19,31 +19,15 @@ export const PostInput = () => {
       navigate("/loginpage");
     }
 
-    let indexID = state.allPostOfUser.findIndex(
-      (el) => el._id === postData._id
-    );
-
-    // console.log("before if: ", postData)
-
-    let postResponse;
-
-    if (indexID !== -1) {
-      postResponse = await postPostServiceHandler({
-        encodedToken: token,
-        postData: postData,
-        id: postData._id,
-      });
-    } else {
-      postResponse = await postPostServiceHandler({
-        encodedToken: token,
-        postData: postData
-      });
-    }
+    let postResponse = await postPostServiceHandler({
+      encodedToken: token,
+      postData: formData
+    });
 
     try {
       if (postResponse.status === 200 || postResponse.status === 201) {
         dispatch({ type: "SET_ALL_POSTS", payload: postResponse.data.posts });
-        setPostData(initialPostData);
+        setFormData(initialFormData);
 
         toast.success("Post Posted!", {
           position: "bottom-right",
@@ -72,8 +56,8 @@ export const PostInput = () => {
                 className="post-input-summary-input"
                 placeholder="Text here..."
                 name="content"
-                onChange={(e) => setPostData({ ...postData, content: e.target.value })}
-                value={postData.content}
+                onChange={(e) => setFormData({ ...formData, content: e.target.value })}
+                value={formData.content}
               />
             </div>
             <div className="post-input-button-container">

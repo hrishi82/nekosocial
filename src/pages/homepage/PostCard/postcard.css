@@ -6,7 +6,7 @@
     padding: 2rem 2rem 1rem 1rem;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     background-color: var(--white-bg);
-    margin: 1.5rem 0
+    margin: 1.5rem 0;
 }
 
 .post-content-box{
@@ -21,6 +21,9 @@
     margin: 0.1rem 1rem 0 0.5rem;
 }
 
+
+/************** Header ************/
+
 .post-content-header-box{
     display: flex;
     justify-content: space-between;
@@ -31,6 +34,7 @@
 .post-content-header-box-left{
     display: flex;
     align-items: center;
+    cursor: pointer;
 }
 
 .post-content-header-box-left > *{
@@ -57,10 +61,14 @@
     color: var(--text-grey);
 }
 
-.post-content-header-box-left .fa-ellipsis{
+.post-content-header-box-right .fa-ellipsis{
     color: var(--text-grey);
+    cursor: pointer;
 }
 
+
+
+/************** Body ************/
 
 .post-content-body-box{
     font-size: 0.8rem;
@@ -68,10 +76,62 @@
     text-align: justify;
     margin: 0.5rem 0;
     width: 100%;
+    cursor: pointer;
 }
+
+
+
+/************** Buttons ************/
 
 .post-content-buttons-box{
     display: flex;
     justify-content: space-between;
-    margin: 0.8rem 0 0.5rem 0;
+    margin: 1.5rem 0 0.5rem 0;
+}
+
+.post-content-buttons-box .far{
+    cursor: pointer;
+    color: var(--text-grey);
+    font-size: 1rem; 
+}
+
+.post-content-buttons-right{
+    justify-content:flex-end;
+}
+.post-content-buttons-right > i{
+    margin-left: 2rem;
+    font-size: 1.1rem;
+}
+
+.post-card-icon-data{
+    margin-left: 0.3rem;
+    font-size: 0.75rem;
+}
+
+
+
+
+/************** Card Option Modal ************/
+
+.post-options-modal-container{
+    position:absolute;
+    border-radius: 0.3rem;
+    top:0.5rem;
+    right: 1rem;
+    overflow: hidden;
+    /* padding: 0.5rem; */
+    border: 1px solid black;
+    width: max-content;
+    box-shadow: rgba(99, 99, 99, 0.8) 0px 2px 8px 0px;
+  }
+
+.post-options-modal-options{
+    text-align: left;
+    padding: 0.5rem;
+}
+.post-options-modal-options:hover{
+    background-color: var(--light-grey-bg);
+    text-align: left;
+    padding: 0.5rem;
+    cursor: pointer;
 }

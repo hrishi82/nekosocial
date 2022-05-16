@@ -9,27 +9,32 @@ const DataContext = createContext()
 export const DataProvider = ({children}) =>{
 
 
-    const initialPostData =   {
-        content:""
+    const initialFormData =   {
+        content:"",
+        comments:[]
       }
 
-    const [postData, setPostData] = useState(initialPostData)
+    const [formData, setFormData] = useState(initialFormData)
+    const [singlePostPageComment, setSinglePostPageComment] = useState(false)
+    const [postInformation, setPostInformation] = useState(false)
 
     const initialValue = {
         allUsers: [],
         allPosts: [],
         allPostOfUser: [],
+        allCommentsOfPost: [],
         filters: {
             search: "",
             sortBy: ""
-        }
+        },
+        displayCommentInputModal:false,
     }
     const [state, dispatch] = useReducer(dataReducer, initialValue)
     
     TimeAgo.addLocale(en)
 
     return(
-        <DataContext.Provider value={{state, dispatch, TimeAgo, postData, setPostData, initialPostData}}>{children}</DataContext.Provider>
+        <DataContext.Provider value={{state, dispatch, TimeAgo, formData, setFormData, initialFormData, singlePostPageComment, setSinglePostPageComment, postInformation, setPostInformation}}>{children}</DataContext.Provider>
     )
 }
 

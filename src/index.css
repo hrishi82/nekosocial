@@ -19,7 +19,7 @@
   --off-white:rgb(231, 231, 231);
   --super-dark-bg: rgb(0, 0, 0);
 
-  --seperator-line: rgb(197, 196, 196);
+  --seperator-line: rgb(231, 231, 231);
 
   --body-bg: rgb(238, 238, 238);
 
@@ -82,6 +82,7 @@ body{
   height: 100%;
   object-fit: cover;
 }
+
 
 /******** Avatar ********/
 
@@ -173,8 +174,11 @@ body{
     border: transparent;
   }
 
-
-
+  .liked{
+    color: red;
+    cursor: pointer;
+  }
+  
 
 /******** Responsive media queries ********/
 
