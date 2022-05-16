@@ -37,9 +37,11 @@ export const LandingPage = () => {
               {token ? "Home" : "Signup"}
             </button>
             <div className="secondary-hero-btn-container">
-              <Link to="/loginpage" className="btn secondary-hero-btn">
-                Already have an account?
-              </Link>
+              {!token && (
+                <Link to="/loginpage" className="btn secondary-hero-btn">
+                  Already have an account?
+                </Link>
+              )}
             </div>
           </div>
         </section>

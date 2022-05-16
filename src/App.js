@@ -4,7 +4,7 @@ import Mockman from "mockman-js";
 import {ProtectedRoute} from "../src/Routes/ProtectedRoute"
 import { NavBar } from "./components";
 import { LeftAsideBar } from "../src/components";
-import {HomePage, LandingPage, ErrorPage, LoginPage, LogoutPage, SignupPage} from "../src/pages"
+import {HomePage, LandingPage, ErrorPage, LoginPage, LogoutPage, SignupPage, SinglePostPage} from "../src/pages"
 
 
 function MockAPI() {
@@ -26,6 +26,7 @@ function App() {
         <Route path="/logoutpage" element={<LogoutPage/>}/>
         <Route path="/signuppage" element={<SignupPage/>}/>
         <Route path="/homepage" element={<ProtectedRoute><HomePage/></ProtectedRoute>}/>
+        <Route path="/singlepostpage/:username/:postID" element={<ProtectedRoute><SinglePostPage/></ProtectedRoute>}/>
         <Route path="*" element={<ErrorPage/>}/>
         
       </Routes>

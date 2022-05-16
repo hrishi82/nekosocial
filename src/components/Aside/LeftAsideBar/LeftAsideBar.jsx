@@ -19,6 +19,10 @@ export const LeftAsideBar = () => {
     navigate("/logoutpage");
   };
 
+  const addPostHandler = () =>{
+    dispatch({ type: "TOGGLE_COMMENT_INPUT_MODAL" });
+  }
+
   return (
     <aside className={`sidebar ${displaySidebar && "sidebar-show"} `}>
       <ul className="sidebar-list-container">
@@ -101,6 +105,7 @@ export const LeftAsideBar = () => {
         <li className="sidebar-li-item">
           <button
             className="btn btn-primary aside-newpost-btn"
+            onClick={addPostHandler}
           >
             Create New Post
           </button>

@@ -8,6 +8,9 @@ export const dataReducer = (state, action) =>{
         case "SET_ALL_POSTS":{
             return {...state, allPosts: action.payload}
         }
+        case "TOGGLE_COMMENT_INPUT_MODAL":{
+            return {...state, displayCommentInputModal: !state.displayCommentInputModal}
+        }
         default:
             return state
     }

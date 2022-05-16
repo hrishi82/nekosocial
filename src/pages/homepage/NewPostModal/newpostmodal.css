@@ -1,0 +1,96 @@
+.notecard-container{
+    margin: 2rem 0;
+}
+
+.card{
+    color: var(--text-default-clr);
+    box-shadow: 0px 0px 35px 25px rgba(0,0,0,0.3);
+    min-height: 10rem;
+    width: 35rem;
+    margin: auto;
+    outline: 1px solid var(--outline-color);
+    height: auto;
+    padding: 1rem 1.5rem;
+    box-sizing: border-box;
+    border: none;
+    outline: none;
+}
+
+/* Content */
+
+.card-body-container{
+    padding: 0rem;
+}
+
+.card-topic-summary{
+    margin: 1.5rem 0 0.5rem 0;
+    width: 100%;
+    font-size: 1.1rem;
+    border-radius: 0.4rem;
+    border: 1px solid var(--grey-bg);
+}
+
+.card-topic-summary-input{
+    width: 100%;
+    background-color: transparent;
+    color: var(--text-default-clr);
+    border: none;
+    outline: none;
+    font-size: 1.3rem;
+    font-weight: 350;
+    resize: none;
+    height: auto;
+    margin: 0;
+}
+
+.card-topic-summary-input:active{
+    border: none;
+    outline: none;
+}
+
+.card-topic-summary-input{
+    font-size: 0.90rem;
+    font-weight: 200;
+    font-family: 'Poppins', sans-serif;
+    min-height: 20vh;
+}
+
+
+
+
+
+/* Footer */
+
+.card-footer-container{
+    margin-top: auto;
+    padding: 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 200;
+    align-items: center;
+}
+
+.footer-btn-wrapper > i {
+    font-size: 1.3rem;
+    margin-right: 1.5rem;
+}
+
+.footer-icon-btn-wrapper .btn{
+    padding: 0.7rem 1.5rem;
+}
+
+
+
+
+  .viewModal{
+      display: block;
+  }
+
+
+
+  @media screen and (max-width:800px) {
+    .card{
+        width: 90vw;
+    }
+    
+  }
+  
