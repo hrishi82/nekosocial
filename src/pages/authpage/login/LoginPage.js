@@ -1,65 +1,35 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import {loginServices, getUsersServiceHandler, getPostsServiceHandler} from "../../../services/services"
 import "../Auth.css"
-import {useData} from "../../../context/dataContext"
-import {useAuth} from "../../../context/authContext"
+import { useSelector, useDispatch } from "react-redux";
+import { loginHandler } from "../../../store/authenticationSlice";
 
 const LoginPage = () => {
 
-    const navigate = useNavigate()
-
-    const {token, setToken, user, setUser} = useAuth()
-
-    const {dispatch} = useData()
-  
+    
     const [credential, setCredential] = useState({username: "", password: ""})
 
+    const {token} = useSelector(store=>store.auth)
 
-    const loginHandler = async (e) => {
-      e.preventDefault();
-      try {
-        let response;
-        if (e.target.innerText === "Login as Guest") {
-          setCredential({
-            username: "JohnDoe",
-            password: "johndoe123",
-          });
-          
-          response = await loginServices('JohnDoe', 'johndoe123');
-          
-        } else {
-          response = await loginServices(credential.username, credential.password);
-        }
-  
-        if (response.status === 200 || response.status === 201) {
-          localStorage.setItem(
-            "login",
-            JSON.stringify({
-              token: response.data.encodedToken,
-              user: response.data.foundUser,
-            })
-          );
+    const navigate = useNavigate()
+    const dispatch = useDispatch() 
 
-          const userResp = await getUsersServiceHandler()
-          if (userResp.status === 200 || userResp.status === 201 ){
-            dispatch({type:"SET_ALL_USERS", payload: userResp.data.users })
-        }
-        
-          const postResp = await getPostsServiceHandler()
-          if (postResp.status === 200 || postResp.status === 201 ){
-            dispatch({type:"SET_ALL_POSTS", payload: postResp.data.posts })
-        }
+    const loginFunc = (e) => {
 
-  
-          setUser(response.data.foundUser);
-          setToken(response.data.encodedToken);
-          navigate("/homepage");
-        }
-      } catch (err) {
-        console.log(err);
+      if (e.target.innerText === "Login as Guest"){
+        setCredential({username: 'JohnDoe',password: 'johndoe123'})
+        dispatch(loginHandler({ username: "JohnDoe", password: "johndoe123" }));
+      }else{
+        dispatch(loginHandler({ username: credential.username, password: credential.password }));
       }
     };
+
+    useEffect(()=>{
+      if(token){
+        navigate("/homepage", { replace: true })
+      }
+    }, [token, navigate])
+
   
     return (
       <>
@@ -106,14 +76,14 @@ const LoginPage = () => {
             <div className="auth-form-btn-container">
               <button
                 className="btn btn-primary auth-form-btn"
-                onClick = {(e)=>loginHandler(e)}
+                onClick = {(e)=>loginFunc(e)}
               >
                 Login
               </button>
   
               <button
                 className="btn btn-secondary auth-form-btn"
-                onClick = {(e)=>loginHandler(e)}
+                onClick = {(e)=>loginFunc(e)}
               >
                 Login as Guest
               </button>

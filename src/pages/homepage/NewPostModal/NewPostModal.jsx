@@ -1,33 +1,23 @@
 import { useState, useEffect } from "react";
-import { useData } from "../../../context/dataContext";
-import { useAuth } from "../../../context/authContext";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./newpostmodal.css";
-import {
-  postPostServiceHandler,
-  editPostServiceHandler,
-  editCommentToPostServiceHandler,
-} from "../../../services/services";
+import { useSelector,useDispatch } from "react-redux";
+import { newPost, editPost, editCommentInPost, toggleCommentInputModal } from "../../../store/postSlice";
+import {setFormData, resetFormData} from "../../../store/utilitiesSlice"
+
+
 
 export const NewPostModal = () => {
-  const {
-    state,
-    dispatch,
-    formData,
-    setFormData,
-    initialFormData,
-    singlePostPageComment,
-    setSinglePostPageComment,
-    postInformation,
-    setPostInformation,
-  } = useData();
-  const { token } = useAuth();
+
+  const  {token}  = useSelector(store=>store.auth);
+  const  {posts, displayCommentInputModal}  = useSelector(store=>store.posts);
+  const  {formData, singlePostPageComment, postInformation}  = useSelector(store=>store.utilities);
+  
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-
- 
 
   const formSubmitHandler = async (e) => {
     e.preventDefault();
@@ -36,80 +26,53 @@ export const NewPostModal = () => {
       navigate("/loginpage");
     }
 
-    let indexID = state.allPosts.findIndex((el) => el?._id === formData?._id);
+    let indexID = posts.findIndex((el) => el?._id === formData?._id);
 
     if (!singlePostPageComment) {
-      let postResponse;
 
       if (indexID !== -1) {
-        postResponse = await editPostServiceHandler({
+        dispatch(editPost({
           encodedToken: token,
           postData: formData,
           postId: formData._id,
-        });
+        }));
+        dispatch(resetFormData())
+        dispatch(toggleCommentInputModal())
+        console.log("inEdit")
       } else {
-        postResponse = await postPostServiceHandler({
+        dispatch(newPost({
           encodedToken: token,
           postData: formData,
-        });
+        }));
+        dispatch(resetFormData())
+        dispatch(toggleCommentInputModal())
+        console.log("newpost")
       }
 
-      try {
-        if (postResponse.status === 200 || postResponse.status === 201) {
-          dispatch({ type: "SET_ALL_POSTS", payload: postResponse.data.posts });
-          setFormData(initialFormData);
-          dispatch({ type: "TOGGLE_COMMENT_INPUT_MODAL" });
-
-          toast.success("Post Posted!", {
-            position: "bottom-right",
-            autoClose: 1500,
-          });
-        }
-      } catch (err) {
-        console.log(err);
-      }
     } else {
-      let postResponse;
-      postResponse = await editCommentToPostServiceHandler({
+      dispatch(editCommentInPost({
         encodedToken: token,
         commentData: formData.commentData,
         postId: postInformation._id,
         commentId: formData._id,
-      });
-
-      try {
-        if (postResponse.status === 200 || postResponse.status === 201) {
-          const newPostsData = state.allPosts.map((el) => {
-            if (el.username === postInformation.username) {
-              return { ...el, comments: postResponse.data.comments };
-            } else {
-              return el;
-            }
-          });
-            dispatch({ type: "SET_ALL_POSTS", payload: newPostsData });
-            setFormData(initialFormData);
-            dispatch({ type: "TOGGLE_COMMENT_INPUT_MODAL" });
-
-            toast.success("Post Posted!", {
-              position: "bottom-right",
-              autoClose: 1500,
-            });
-        }
-      } catch (err) {
-        console.log(err);
-      }
+      }));
+      dispatch(resetFormData())
+      dispatch(toggleCommentInputModal())
+      console.log("commentinpost")
     }
   };
 
   const handleFormData = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    dispatch(setFormData({ ...formData, [e.target.name]: e.target.value }));
   };
+
+
 
   return (
     <>
       <div
         className={`comment-input-modal-container ${
-          state.displayCommentInputModal ? "viewModal" : null
+          displayCommentInputModal ? "viewModal" : null
         }`}
       >
         <form onSubmit={(e) => formSubmitHandler(e)}>
@@ -122,8 +85,8 @@ export const NewPostModal = () => {
                   name={singlePostPageComment ? `commentData` : `content`}
                   value={
                     singlePostPageComment
-                      ? formData.commentData
-                      : formData.content
+                      ? formData?.commentData
+                      : formData?.content
                   }
                   onChange={(e) => handleFormData(e)}
                 />
@@ -145,7 +108,6 @@ export const NewPostModal = () => {
           </div>
         </form>
       </div>
-      <ToastContainer />
     </>
   );
 };

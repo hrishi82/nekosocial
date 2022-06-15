@@ -1,10 +1,15 @@
 import "./App.css";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import Mockman from "mockman-js";
 import {ProtectedRoute} from "../src/Routes/ProtectedRoute"
 import { NavBar } from "./components";
 import { LeftAsideBar } from "../src/components";
+import { ToastContainer } from "react-toastify";
+import { useSelector, useDispatch } from "react-redux";
 import {HomePage, LandingPage, ErrorPage, LoginPage, LogoutPage, SignupPage, SinglePostPage} from "../src/pages"
+import { useEffect } from "react";
+import {getAllPosts} from "./store/postSlice"
+import {getAllUsers} from "./store/userSlice"
 
 
 function MockAPI() {
@@ -16,6 +21,20 @@ function MockAPI() {
 }
 
 function App() {
+
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const {token} = useSelector(store=>store.auth)
+
+  useEffect(()=>{
+    if(token){
+      dispatch(getAllPosts())
+      dispatch(getAllUsers())
+    }
+  }, [token, navigate, dispatch])
+
+
+
   return (
     <div className="App relative">
       <NavBar/>
@@ -30,6 +49,7 @@ function App() {
         <Route path="*" element={<ErrorPage/>}/>
         
       </Routes>
+      <ToastContainer />
     </div>
   );
 }

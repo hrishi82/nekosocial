@@ -1,17 +1,31 @@
 import "./postcard.css";
-import { useData } from "../../../context/dataContext";
 import ReactTimeAgo from "react-time-ago";
-import { useNavigate, useParams } from "react-router-dom";
-import { useAuth } from "../../../context/authContext";
-import {deletePostServiceHandler, deleteCommentFromPostServiceHandler, postLikeToPostServiceHandler, postDislikeToPostServiceHandler} from "../../../services/services"
-import { ToastContainer, toast } from "react-toastify";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
 
-import { useState } from "react";
+import {setFormData, setSingePageComment, setPostInformation} from "../../../store/utilitiesSlice"
+import {toggleCommentInputModal, deletePost, deleteCommentFromPost, postLikeToPost, postDislikeToPost} from "../../../store/postSlice"
+import { postBookmarkPost, postRemoveBookmarkPost } from '../../../store/authenticationSlice';
+
+
+
 
 export const PostCard = ({ data, fromSinglePostPg, postInfo }) => {
-  const { state, dispatch, TimeAgo, formData, setFormData, setSinglePostPageComment, setPostInformation } = useData();
+
+  const [viewCardOptionModal, setViewCardOptionModal] = useState(false);
+  const [userData, setUserData] = useState(null);
   
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { token, user } = useSelector(store => store.auth || {})
+
+  const {users} = useSelector(store => store.users || {})
+
+  const {posts } = useSelector(store => store.posts || {})
+
   const {
     username,
     content,
@@ -23,20 +37,15 @@ export const PostCard = ({ data, fromSinglePostPg, postInfo }) => {
     commentData
   } = data;
 
+  useEffect(()=>{
+    setUserData(users.filter((eachuser) => eachuser.username === data.username)[0])
+  }, [data, users, user, userData, posts])
+  
 
+  const findIfLiked = () => data?.likes?.likedBy.filter(el=>el?.username === user?.username).length!==0
+  const findIfBookmarked = () => user?.bookmarks.filter(postID=> postID._id=== _id).length!==0
 
-  const navigate = useNavigate();
-  const { token, user } = useAuth();
-
-  const findIfLiked = likes?.likedBy.some(el=>el?.username === user?.username)
-
-
-  const [viewCardOptionModal, setViewCardOptionModal] = useState(false);
-
-  const timeAgo = new TimeAgo("en-US");
   let formatedDate = new Date(updatedAt);
-
-  let userData = state.allUsers.filter((el) => el.username === username)[0];
 
   const navigateToPostFunc = () => {
     navigate(`/singlepostpage/${username}/${_id}`);
@@ -48,13 +57,14 @@ export const PostCard = ({ data, fromSinglePostPg, postInfo }) => {
 
   const editPostHandler = () => {
     if(!fromSinglePostPg){
-      setFormData(data)
-      dispatch({ type: "TOGGLE_COMMENT_INPUT_MODAL" })
+      dispatch(setFormData(data))
+      dispatch(toggleCommentInputModal())
+      
     }else{
-      setSinglePostPageComment(true)
+      setSingePageComment(true)
       setPostInformation(postInfo)
-      setFormData(data)
-      dispatch({ type: "TOGGLE_COMMENT_INPUT_MODAL" })
+      dispatch(setFormData(data))
+      dispatch(toggleCommentInputModal())
     }
     setViewCardOptionModal(!viewCardOptionModal)
   };
@@ -62,78 +72,35 @@ export const PostCard = ({ data, fromSinglePostPg, postInfo }) => {
   const deletePostHandler = async () => {
 
     if(!fromSinglePostPg){
-      let delresp = await deletePostServiceHandler({encodedToken:token, postId:data._id})
       try {
-        if (delresp.status === 200 || delresp.status === 201) {
-          dispatch({ type: "SET_ALL_POSTS", payload: delresp.data.posts });
-  
-          toast.error("Post Deleted!", {
-            position: "bottom-right",
-            autoClose: 1500,
-          });
-        }
+        dispatch(deletePost({encodedToken:token, postId:data._id}))
       } catch (err) {
         console.log(err);
       }
     }else{
-      let delresp = await deleteCommentFromPostServiceHandler({encodedToken:token, postId:postInfo._id, commentId:data._id})
       try {
-        if (delresp.status === 200 || delresp.status === 201) {
-
-          const newPostsData = state.allPosts.map((el) => {
-            if(el.username === postInfo.username){
-                return {...el, comments:delresp.data.comments}
-            }else{
-                return el
-            }
-        })
-
-          dispatch({ type: "SET_ALL_POSTS", payload: newPostsData });
-  
-          toast.error("Post Deleted!", {
-            position: "bottom-right",
-            autoClose: 1500,
-          });
-        }
+        dispatch(deleteCommentFromPost({encodedToken:token, postId:postInfo._id, commentId:data._id}))
       } catch (err) {
         console.log(err);
       }
-
     }
-
     setViewCardOptionModal(!viewCardOptionModal)
   };
 
   const likeHandler = async () =>{
 
-    if (!findIfLiked){
-      let likeresp = await postLikeToPostServiceHandler({encodedToken:token, postId:data._id})
-      try {
-        if (likeresp.status === 200 || likeresp.status === 201) {
-          dispatch({ type: "SET_ALL_POSTS", payload: likeresp.data.posts });
-  
-          toast.success("Post Liked!", {
-            position: "bottom-right",
-            autoClose: 1500,
-          });
-        }
-      } catch (err) {
-        console.log(err);
-      }
+    if (findIfLiked()){
+      dispatch(postDislikeToPost({encodedToken:token, postId:data._id}))
     }else{
-      let likeresp = await postDislikeToPostServiceHandler({encodedToken:token, postId:data._id})
-      try {
-        if (likeresp.status === 200 || likeresp.status === 201) {
-          dispatch({ type: "SET_ALL_POSTS", payload: likeresp.data.posts });
-  
-          toast.warn("Post Disliked!", {
-            position: "bottom-right",
-            autoClose: 1500,
-          });
-        }
-      } catch (err) {
-        console.log(err);
-      }
+      dispatch(postLikeToPost({encodedToken:token, postId:data._id}))
+    }
+  }
+  const bookmarkHandler = async () =>{
+
+    if (findIfBookmarked()){
+      dispatch(postRemoveBookmarkPost({encodedToken:token, postId:data._id}))
+    }else{
+      dispatch(postBookmarkPost({encodedToken:token, postId:data._id}))
     }
   }
 
@@ -142,8 +109,8 @@ export const PostCard = ({ data, fromSinglePostPg, postInfo }) => {
       <div className="post-input-avtar-box">
         <img
           src={
-            userData.profilePicture
-              ? userData.profilePicture
+            userData?.profilePicture
+              ? userData?.profilePicture
               : "https://res.cloudinary.com/dac2rwutk/image/upload/v1652162986/cat_ij5wno.jpg"
           }
           className="avatar avatar-size-sm"
@@ -196,21 +163,21 @@ export const PostCard = ({ data, fromSinglePostPg, postInfo }) => {
             </>
           ) : (
             <>
-              <i className={findIfLiked  ? "fas fa-heart liked": "far fa-heart"} onClick= {likeHandler}>
+              <i className={findIfLiked()  ? "fas fa-heart liked": "far fa-heart"} onClick= {likeHandler}>
                 <span className="post-card-icon-data">{likes?.likeCount}</span>
               </i>
               <i className="far fa-comment-alt">
                 <span className="post-card-icon-data">{comments?.length}</span>
               </i>
-              <i className="fas fa-share-alt"></i>
+              <i className="fas fa-share-alt" onClick={()=>console.log(findIfBookmarked())}></i>
               <i
-                className="fas fa-bookmark bookmark-icon"
-                onClick={()=>console.log(findIfLiked)}></i>
+                className={findIfBookmarked() ? "fas fa-bookmark bookmark-icon": "far fa-bookmark"}
+                onClick={bookmarkHandler}></i>
+
             </>
           )}
         </div>
       </div>
-      <ToastContainer />
     </div>
   );
 };

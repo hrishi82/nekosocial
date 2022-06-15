@@ -3,17 +3,24 @@ import "../main.css";
 import { LeftAsideBar, RightAsideBar } from "../../components";
 import { useParams, useNavigate } from "react-router-dom";
 import { SinglePost } from "./SinglePost";
-import { useData } from "../../context/dataContext";
 import { PostCard } from "../homepage/PostCard/PostCard";
 import { useState, useEffect } from "react";
 import { getAllCommentsOfPostServiceHandler } from "../../services/services";
 import {NewPostModal} from "../homepage/NewPostModal/NewPostModal"
+import {toggleCommentInputModal} from "../../store/postSlice"
+import { useDispatch, useSelector } from "react-redux";
 
 
 export const SinglePostPage = () => {
   const { username, postID } = useParams();
-  const { state, dispatch } = useData();
-  const postInfo = state.allPosts?.find((el) => el.username === username);
+
+  const dispatch = useDispatch()
+  const {posts, displayCommentInputModal} = useSelector(store => store.posts)
+
+  const postInfo = posts?.find((el) => el._id === postID);
+
+  // console.log(postInfo)
+  
   const [commentsOfPost, setCommentsOfPost] = useState([]);
 
   useEffect(() => {
@@ -27,15 +34,15 @@ export const SinglePostPage = () => {
         console.log(err);
       }
     })();
-  }, [postID, state]);
+  }, [postID, posts]);
 
   return (
     <>
     <NewPostModal/>
     <div
-    onClick={() => dispatch({ type: "TOGGLE_COMMENT_INPUT_MODAL" })}
+    onClick={() => dispatch(toggleCommentInputModal())}
     className={`comment-input-master-wrapper ${
-      state.displayCommentInputModal ? "viewModal" : null
+      displayCommentInputModal ? "viewModal" : null
     }`}
   ></div>
       <div className="home-page-container relative">

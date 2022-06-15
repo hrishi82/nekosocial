@@ -1,21 +1,25 @@
 import ReactTimeAgo from "react-time-ago";
-import { useData } from "../../context/dataContext";
-import { useAuth } from "../../context/authContext";
 import { useNavigate } from "react-router-dom";
-import { postCommentToPostServiceHandler } from "../../services/services";
+import {postCommentToPost} from "../../store/postSlice"
 import {useState, useEffect} from "react"
+import { useSelector, useDispatch } from "react-redux";
 
 export const SinglePost = ({ singlepostdata }) => {
+
+  console.log(singlepostdata)
+  
   const { username, content, updatedAt, likes } = singlepostdata;
   const [commentData, setCommentData] = useState('')
 
   let formatedDate = new Date(updatedAt);
 
-  const {token, user} = useAuth()
-  const {state, dispatch} = useData()
-  const navigate = useNavigate()
+  const {token, user} = useSelector(store => store.auth)
+  const {users} = useSelector(store => store.users)
 
-  let postUserData = state.allUsers.filter(el=> el.username === singlepostdata?.username)[0] 
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+  let postUserData = users.filter(el=> el.username === singlepostdata?.username)[0] 
 
   const postCommentHandlerFunc = async (e) =>{
     e.preventDefault()
@@ -23,20 +27,8 @@ export const SinglePost = ({ singlepostdata }) => {
         navigate("/loginpage")
     }
     try{
-        let postresp = await postCommentToPostServiceHandler({encodedToken: token, commentData: commentData, postId: singlepostdata._id})
-
-        if(postresp.status === 200 || postresp.status === 201){
-
-            const newPostsData = state.allPosts.map((el) => {
-                if(el.username === singlepostdata.username){
-                    return {...el, comments:postresp.data.comments}
-                }else{
-                    return el
-                }
-            })
-            dispatch({ type: "SET_ALL_POSTS", payload:newPostsData})
-            setCommentData('');
-        }
+        dispatch(postCommentToPost({encodedToken: token, commentData: commentData, postId: singlepostdata._id}))
+        setCommentData('');
     }catch(err){
         console.log(err)
     }

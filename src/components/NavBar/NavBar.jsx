@@ -1,17 +1,11 @@
 import { Link, useNavigate } from "react-router-dom";
 import "./navbar.css"
-import {useAuth} from "../../context/authContext"
-import {useData} from "../../context/dataContext"
-
-
 
 const NavBar = () => {
 
-  const {token, setToken, setUser} = useAuth()
-  const {dispatch} = useData()
 
   const toggleSidebar = () =>{
-    dispatch({type: "TOGGLE_SIDEBAR"})
+    // dispatch({type: "TOGGLE_SIDEBAR"})
   }
 
   return (

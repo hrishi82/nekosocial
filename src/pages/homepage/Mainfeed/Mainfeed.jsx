@@ -1,11 +1,11 @@
 import { PostInput } from "../PostInput/PostInput"
 import { PostCard } from "../PostCard/PostCard"
-import {useData} from "../../../context/dataContext"
+import { useSelector } from "react-redux"
 
 
 export const Mainfeed = () =>{
-    const {state} = useData()
-    const {allPosts} = state
+    const {posts} = useSelector(store => store.posts)
+
 return (    
     <div className="mainfeed-container">
         <PostInput/>
@@ -13,7 +13,7 @@ return (
             <p className="mainfeed-info-text">Latest Post</p>
             <i className="fa-solid fa-arrow-up-short-wide"></i>
         </div>
-        {allPosts.map(el=><PostCard key={el._id} data={el} fromSinglePostPg={false}/>)}
+        {posts?.map(el=><PostCard key={el._id} data={el} fromSinglePostPg={false}/>)}
     </div>
     )
 } 

@@ -1,19 +1,23 @@
 import { LeftAsideBar, RightAsideBar } from "../../components";
 import "../main.css";
-import { useData } from "../../context/dataContext";
+import {toggleCommentInputModal} from "../../store/postSlice"
+import { useDispatch, useSelector } from "react-redux";
 import { Mainfeed } from "./Mainfeed/Mainfeed";
 import {NewPostModal} from "./NewPostModal/NewPostModal"
+
+
 export const HomePage = () => {
 
-  const {state, dispatch} = useData()
+  const dispatch = useDispatch()
+  const {displayCommentInputModal} = useSelector(store => store.posts)
 
   return (
     <>
     <NewPostModal/>
       <div
-        onClick={() => dispatch({ type: "TOGGLE_COMMENT_INPUT_MODAL" })}
+        onClick={() => dispatch(toggleCommentInputModal())}
         className={`comment-input-master-wrapper ${
-          state.displayCommentInputModal ? "viewModal" : null
+          displayCommentInputModal ? "viewModal" : null
         }`}
       ></div>
       <div className="home-page-container relative">

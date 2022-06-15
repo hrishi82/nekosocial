@@ -1,12 +1,10 @@
-import { Navbar } from "../../components/NavBar/NavBar";
+
 import "./landingpage.css";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { useAuth } from "../../context/authContext";
-import { useData } from "../../context/dataContext";
+import { useDispatch, useSelector } from "react-redux";
 
 export const LandingPage = () => {
-  const { token } = useAuth();
+  const { token } = useSelector(store=>store.auth)
   const navigate = useNavigate();
 
   const logoutHandler = (e) => {
