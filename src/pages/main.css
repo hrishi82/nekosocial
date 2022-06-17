@@ -25,6 +25,12 @@
     color: orange;
   }
 
+  
+.liked{
+  color: red;
+  cursor: pointer;
+}
+  
 
 /* Modal */
 .comment-input-master-wrapper {

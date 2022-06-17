@@ -51,7 +51,7 @@ export const posts = [
         username: "janedoe",
         profilePicture:
           "https://res.cloudinary.com/dac2rwutk/image/upload/v1652212646/profile3_usk34b.jpg",
-        commentData: "some commentData",
+        text: "some text",
         votes: {
           upvotedBy: [],
           downvotedBy: [],
@@ -66,7 +66,7 @@ export const posts = [
         username: "toastedelvis",
         profilePicture:
           "https://images.unsplash.com/photo-1573865526739-10659fec78a5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1015&q=80",
-        commentData: "Hello",
+        text: "Hello",
         votes: {
           upvotedBy: [],
           downvotedBy: [],
@@ -113,7 +113,7 @@ export const posts = [
         username: "goodboi",
         profilePicture:
           "https://images.unsplash.com/photo-1533738363-b7f9aef128ce?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1035&q=80",
-        commentData: "hi",
+        text: "hi",
         votes: {
           upvotedBy: [],
           downvotedBy: [],
@@ -128,7 +128,7 @@ export const posts = [
         username: "toastedelvis",
         profilePicture:
           "https://images.unsplash.com/photo-1573865526739-10659fec78a5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1015&q=80",
-        commentData: "console",
+        text: "console",
         votes: {
           upvotedBy: [],
           downvotedBy: [],

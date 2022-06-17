@@ -3,12 +3,12 @@ import "../main.css";
 import { LeftAsideBar, RightAsideBar } from "../../components";
 import { useParams, useNavigate } from "react-router-dom";
 import { SinglePost } from "./SinglePost";
-import { PostCard } from "../homepage/PostCard/PostCard";
+import { CommentCard } from "../singlepostpage/CommentCard";
 import { useState, useEffect } from "react";
 import { getAllCommentsOfPostServiceHandler } from "../../services/services";
-import {NewPostModal} from "../homepage/NewPostModal/NewPostModal"
 import {toggleCommentInputModal} from "../../store/postSlice"
 import { useDispatch, useSelector } from "react-redux";
+import {EditCommentModal} from "./EditCommentModal.jsx"
 
 
 export const SinglePostPage = () => {
@@ -38,7 +38,7 @@ export const SinglePostPage = () => {
 
   return (
     <>
-    <NewPostModal/>
+    <EditCommentModal/>
     <div
     onClick={() => dispatch(toggleCommentInputModal())}
     className={`comment-input-master-wrapper ${
@@ -50,7 +50,7 @@ export const SinglePostPage = () => {
         <div className="mainfeed-container">
           <SinglePost singlepostdata={postInfo} />
           {commentsOfPost?.map((el) => (
-            <PostCard key={el._id} data={el} fromSinglePostPg={true} postInfo={postInfo}/>
+            <CommentCard key={el._id} data={el} postInfo={postInfo}/>
           ))}
         </div>
         <RightAsideBar />

@@ -1,13 +1,13 @@
 import ReactTimeAgo from "react-time-ago";
 import { useNavigate } from "react-router-dom";
-import {postCommentToPost} from "../../store/postSlice"
+import {postCommentToPost, postLikeToPost, postDislikeToPost} from "../../store/postSlice"
 import {useState, useEffect} from "react"
 import { useSelector, useDispatch } from "react-redux";
+import {postBookmarkPost, postRemoveBookmarkPost} from "../../store/authenticationSlice"
+import "../main.css"
 
 export const SinglePost = ({ singlepostdata }) => {
 
-  console.log(singlepostdata)
-  
   const { username, content, updatedAt, likes } = singlepostdata;
   const [commentData, setCommentData] = useState('')
 
@@ -20,6 +20,26 @@ export const SinglePost = ({ singlepostdata }) => {
   const dispatch = useDispatch()
 
   let postUserData = users.filter(el=> el.username === singlepostdata?.username)[0] 
+
+  const findIfLiked = () => singlepostdata?.likes?.likedBy.filter(el=>el?.username === user?.username).length!==0
+  const findIfBookmarked = () => user?.bookmarks.filter(postID=> postID=== singlepostdata._id).length!==0
+
+  const likeHandler = async () =>{
+
+    if (findIfLiked()){
+      dispatch(postDislikeToPost({encodedToken:token, postId:singlepostdata._id}))
+    }else{
+      dispatch(postLikeToPost({encodedToken:token, postId:singlepostdata._id}))
+    }
+  }
+  const bookmarkHandler = async () =>{
+
+    if (findIfBookmarked()){
+      dispatch(postRemoveBookmarkPost({encodedToken:token, postId:singlepostdata._id}))
+    }else{
+      dispatch(postBookmarkPost({encodedToken:token, postId:singlepostdata._id}))
+    }
+  }
 
   const postCommentHandlerFunc = async (e) =>{
     e.preventDefault()
@@ -45,7 +65,7 @@ export const SinglePost = ({ singlepostdata }) => {
             </div>
             <div className="single-post-content-header-box">
               <div className="single-post-content-header-box-left">
-                <div className="single-post-input-avtar-box">
+                <div className="single-post-input-avtar-box" onClick={()=>navigate(`/profilepage/${username}`)}>
                   <img
                     src={
                         postUserData?.profilePicture
@@ -82,10 +102,11 @@ export const SinglePost = ({ singlepostdata }) => {
             </div>
 
             <div className="single-post-content-buttons-box">
-              <i className="far fa-heart"></i>
+              <i className={findIfLiked()  ? "fas fa-heart liked": "far fa-heart"} onClick= {likeHandler}></i>
               <i className="far fa-comment-alt"></i>
               <i className="fas fa-share-alt"></i>
-              <i className="fas fa-bookmark bookmark-icon"></i>
+              <i className={findIfBookmarked() ? "fas fa-bookmark bookmark-icon": "far fa-bookmark"}
+                onClick={bookmarkHandler}></i>
             </div>
           </div>
         </div>

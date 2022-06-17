@@ -7,7 +7,7 @@ import {toggleCommentInputModal} from "../../../store/postSlice"
 import {toggleSidebar} from "../../../store/utilitiesSlice"
 
 export const LeftAsideBar = () => {
-  const { token } = useSelector(store => store.auth)
+  const { token, user } = useSelector(store => store.auth)
   const { displaySidebar } = useSelector(store => store.utilities)
 
   const navigate = useNavigate();
@@ -88,7 +88,7 @@ export const LeftAsideBar = () => {
 
         <li className="sidebar-li-item">
           <NavLink
-            to="/profilepage"
+            to={`/profilepage/${user?.username}`}
             className={({ isActive }) =>
               isActive ? "navlink-active" : "navlink"
             }
@@ -114,7 +114,7 @@ export const LeftAsideBar = () => {
       </ul>
 
       <ul className="sidebar-list-container sidebar-list-container-bottom">
-        <li className="sidebar-li-item">
+        {/* <li className="sidebar-li-item">
           {token && (
             <NavLink
               to="/profilepage"
@@ -126,7 +126,7 @@ export const LeftAsideBar = () => {
               PROFILE
             </NavLink>
           )}
-        </li>
+        </li> */}
         <li className="sidebar-li-item">
           {token ? (
             <NavLink

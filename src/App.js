@@ -3,10 +3,9 @@ import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import Mockman from "mockman-js";
 import {ProtectedRoute} from "../src/Routes/ProtectedRoute"
 import { NavBar } from "./components";
-import { LeftAsideBar } from "../src/components";
 import { ToastContainer } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
-import {HomePage, LandingPage, ErrorPage, LoginPage, LogoutPage, SignupPage, SinglePostPage} from "../src/pages"
+import {HomePage, LandingPage, ErrorPage, LoginPage, LogoutPage, SignupPage, SinglePostPage, BookmarksPage, ProfilePage} from "../src/pages"
 import { useEffect } from "react";
 import {getAllPosts} from "./store/postSlice"
 import {getAllUsers} from "./store/userSlice"
@@ -45,6 +44,8 @@ function App() {
         <Route path="/logoutpage" element={<LogoutPage/>}/>
         <Route path="/signuppage" element={<SignupPage/>}/>
         <Route path="/homepage" element={<ProtectedRoute><HomePage/></ProtectedRoute>}/>
+        <Route path="/bookmarkspage" element={<ProtectedRoute><BookmarksPage/></ProtectedRoute>}/>
+        <Route path="/profilepage/:username" element={<ProtectedRoute><ProfilePage/></ProtectedRoute>}/>
         <Route path="/singlepostpage/:username/:postID" element={<ProtectedRoute><SinglePostPage/></ProtectedRoute>}/>
         <Route path="*" element={<ErrorPage/>}/>
         

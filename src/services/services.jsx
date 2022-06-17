@@ -41,7 +41,6 @@ export const editPostServiceHandler = async (
   postData,
   postId,
 ) => {
-  console.log(postId)
   return axios.post(
     `/api/posts/edit/${postId}`,
     { postData },
@@ -100,9 +99,8 @@ export const deleteCommentFromPostServiceHandler = async (
   postId,
   commentId,
 ) => {
-  return axios.post(
+  return axios.delete(
     `/api/comments/delete/${postId}/${commentId}`,
-    {},
     {
       headers: { authorization: encodedToken },
     }

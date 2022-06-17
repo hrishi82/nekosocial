@@ -157,6 +157,7 @@ body{
   width: 100%;
 }
 
+
 .btn-secondary{
     color: var(--text-secondary-clr);
     background-color: var(--text-default-clr);
@@ -174,11 +175,6 @@ body{
     border: transparent;
   }
 
-  .liked{
-    color: red;
-    cursor: pointer;
-  }
-  
 
 /******** Responsive media queries ********/
 

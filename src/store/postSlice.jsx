@@ -105,7 +105,7 @@ export const editCommentInPost = createAsyncThunk(
 );
 export const deleteCommentFromPost = createAsyncThunk(
   "posts/deleteCommentFromPost",
-  async ({ encodedToken, commentId, postId }) => {
+  async ({ encodedToken,  postId, commentId }) => {
     try {
       const resp = await deleteCommentFromPostServiceHandler(
         encodedToken,
@@ -177,6 +177,12 @@ const postSlice = createSlice({
     [editPost.rejected]: (action) => {
       console.error(action.payload);
     },
+    [deletePost.fulfilled]: (state, action) => {
+        state.posts = action.payload;
+    },
+    [deletePost.rejected]: (action) => {
+      console.error(action.payload);
+    },
     [editCommentInPost.fulfilled]: (state, action) => {
         state.posts = action.payload;
     },
@@ -187,12 +193,6 @@ const postSlice = createSlice({
         state.posts = action.payload;
     },
     [postCommentToPost.rejected]: (action) => {
-      console.error(action.payload);
-    },
-    [deletePost.fulfilled]: (state, action) => {
-        state.posts = action.payload;
-    },
-    [deletePost.rejected]: (action) => {
       console.error(action.payload);
     },
     [deleteCommentFromPost.fulfilled]: (state, action) => {

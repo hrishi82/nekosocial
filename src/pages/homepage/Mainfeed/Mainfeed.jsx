@@ -13,7 +13,7 @@ return (
             <p className="mainfeed-info-text">Latest Post</p>
             <i className="fa-solid fa-arrow-up-short-wide"></i>
         </div>
-        {posts?.map(el=><PostCard key={el._id} data={el} fromSinglePostPg={false}/>)}
+        {posts?.map(el=><PostCard key={el._id} data={el} />)}
     </div>
     )
 } 
