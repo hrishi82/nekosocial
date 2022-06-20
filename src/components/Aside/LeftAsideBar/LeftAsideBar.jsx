@@ -1,26 +1,25 @@
 import "../asidebar.css";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useAuth } from "../../../context/authContext";
-import { useData } from "../../../context/dataContext";
+
+import { useDispatch, useSelector } from "react-redux";
+import { logoutHandler } from "../../../store/authenticationSlice";
+import {toggleCommentInputModal} from "../../../store/postSlice"
+import {toggleSidebar} from "../../../store/utilitiesSlice"
 
 export const LeftAsideBar = () => {
-  const { token, setToken, setUser } = useAuth();
-  const { state, dispatch, postData } = useData();
-  const { displaySidebar } = state;
-  const navigate = useNavigate();
+  const { token, user } = useSelector(store => store.auth)
+  const { displaySidebar } = useSelector(store => store.utilities)
 
-  const logoutHandler = (e) => {
-    e.preventDefault();
-    localStorage.removeItem("login");
-    setToken(null);
-    setUser(null);
-    dispatch({ type: "SET_ALL_NOTES", payload: [] });
-    dispatch({ type: "SET_ALL_ARCHIVED_NOTES", payload: [] });
+  const navigate = useNavigate();
+  const dispatch = useDispatch()
+
+  const logoutFunc = () => {
+    dispatch(logoutHandler())
     navigate("/logoutpage");
   };
 
   const addPostHandler = () =>{
-    dispatch({ type: "TOGGLE_COMMENT_INPUT_MODAL" });
+    dispatch(toggleCommentInputModal());
   }
 
   return (
@@ -32,7 +31,7 @@ export const LeftAsideBar = () => {
             className={({ isActive }) =>
               isActive ? "navlink-active" : "navlink"
             }
-            onClick={() => dispatch({ type: "TOGGLE_SIDEBAR" })}
+            onClick={() => dispatch(toggleSidebar())}
           >
             <div className="sidebar-icon-container">
               <i className="fa-solid fa-house-chimney"></i>
@@ -47,7 +46,7 @@ export const LeftAsideBar = () => {
             className={({ isActive }) =>
               isActive ? "navlink-active" : "navlink"
             }
-            onClick={() => dispatch({ type: "TOGGLE_SIDEBAR" })}
+            onClick={() => dispatch(toggleSidebar())}
           >
             <div className="sidebar-icon-container">
               <i className="fa-solid fa-rocket"></i>
@@ -62,7 +61,7 @@ export const LeftAsideBar = () => {
             className={({ isActive }) =>
               isActive ? "navlink-active" : "navlink"
             }
-            onClick={() => dispatch({ type: "TOGGLE_SIDEBAR" })}
+            onClick={() => dispatch(toggleSidebar())}
           >
             <div className="sidebar-icon-container">
               <i className="fa-solid fa-bookmark"></i>
@@ -77,7 +76,7 @@ export const LeftAsideBar = () => {
             className={({ isActive }) =>
               isActive ? "navlink-active" : "navlink"
             }
-            onClick={() => dispatch({ type: "TOGGLE_SIDEBAR" })}
+            onClick={() => dispatch(toggleSidebar())}
           >
             <div className="sidebar-icon-container">
               <i className="fa-solid fa-bell"></i>
@@ -88,11 +87,11 @@ export const LeftAsideBar = () => {
 
         <li className="sidebar-li-item">
           <NavLink
-            to="/profilepage"
+            to={`/profilepage/${user?.username}`}
             className={({ isActive }) =>
               isActive ? "navlink-active" : "navlink"
             }
-            onClick={() => dispatch({ type: "TOGGLE_SIDEBAR" })}
+            onClick={() => dispatch(toggleSidebar())}
           >
             {" "}
             <div className="sidebar-icon-container">
@@ -114,19 +113,19 @@ export const LeftAsideBar = () => {
       </ul>
 
       <ul className="sidebar-list-container sidebar-list-container-bottom">
-        <li className="sidebar-li-item">
+        {/* <li className="sidebar-li-item">
           {token && (
             <NavLink
               to="/profilepage"
               className={({ isActive }) =>
                 isActive ? "navlink-active" : "navlink"
               }
-              onClick={() => dispatch({ type: "TOGGLE_SIDEBAR" })}
+              onClick={() => dispatch(toggleSidebar())}
             >
               PROFILE
             </NavLink>
           )}
-        </li>
+        </li> */}
         <li className="sidebar-li-item">
           {token ? (
             <NavLink
@@ -134,9 +133,9 @@ export const LeftAsideBar = () => {
               className={({ isActive }) =>
                 isActive ? "navlink-active" : "navlink"
               }
-              onClick={(e) => logoutHandler(e)}
+              onClick={logoutFunc}
             >
-              LOGOUT{" "}
+              LOGOUT
             </NavLink>
           ) : (
             <NavLink
@@ -144,7 +143,7 @@ export const LeftAsideBar = () => {
               className={({ isActive }) =>
                 isActive ? "navlink-active" : "navlink"
               }
-              onClick={() => dispatch({ type: "TOGGLE_SIDEBAR" })}
+              onClick={() => dispatch(toggleSidebar())}
             >
               LOGIN
             </NavLink>

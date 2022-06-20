@@ -89,7 +89,7 @@
     margin: 1.5rem 0 0.5rem 0;
 }
 
-.post-content-buttons-box .far{
+.post-content-buttons-box{
     cursor: pointer;
     color: var(--text-grey);
     font-size: 1rem; 

@@ -1,18 +1,15 @@
-import "./postcard.css";
+import "../homepage/PostCard/postcard.css";
 import ReactTimeAgo from "react-time-ago";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 
-import {setFormData} from "../../../store/utilitiesSlice"
-import {toggleCommentInputModal, deletePost, postLikeToPost, postDislikeToPost} from "../../../store/postSlice"
-import { postBookmarkPost, postRemoveBookmarkPost } from '../../../store/authenticationSlice';
+import {setFormData, setPostInformation} from "../../store/utilitiesSlice"
+import {toggleCommentInputModal, deleteCommentFromPost} from "../../store/postSlice"
 
 
-
-
-export const PostCard = ({ data, postInfo }) => {
+export const CommentCard = ({ data, postInfo }) => {
 
   const [viewCardOptionModal, setViewCardOptionModal] = useState(false);
   const [userData, setUserData] = useState(null);
@@ -28,63 +25,38 @@ export const PostCard = ({ data, postInfo }) => {
 
   const {
     username,
-    content,
     updatedAt,
-    createdAt,
-    likes,
     _id,
-    comments,
+    text,
+    commentData
   } = data;
 
   useEffect(()=>{
     setUserData(users.filter((eachuser) => eachuser.username === data.username)[0])
   }, [data, users, user, userData, posts])
-  
-
-  const findIfLiked = () => data?.likes?.likedBy.filter(el=>el?.username === user?.username).length!==0
-  const findIfBookmarked = () => user?.bookmarks.filter(postID=> postID=== _id).length!==0
 
   let formatedDate = new Date(updatedAt);
-
-  const navigateToPostFunc = () => {
-    navigate(`/singlepostpage/${username}/${_id}`);
-  };
 
   const postOptionsHandler = () => {
     setViewCardOptionModal(!viewCardOptionModal)
   };
 
-  const editPostHandler = () => {
+  const editCommentHandler = () => {
+      dispatch(setPostInformation(postInfo))
       dispatch(setFormData(data))
       dispatch(toggleCommentInputModal())
-    setViewCardOptionModal(!viewCardOptionModal)
+      setViewCardOptionModal(!viewCardOptionModal)
   };
 
-  const deletePostHandler = async () => {
+  const deleteCommentHandler = async () => {
       try {
-        dispatch(deletePost({encodedToken:token, postId:data._id}))
+        dispatch(deleteCommentFromPost({encodedToken:token, postId:postInfo._id, commentId:data._id}))
       } catch (err) {
         console.log(err);
       }
     setViewCardOptionModal(!viewCardOptionModal)
   };
 
-  const likeHandler = async () =>{
-
-    if (findIfLiked()){
-      dispatch(postDislikeToPost({encodedToken:token, postId:data._id}))
-    }else{
-      dispatch(postLikeToPost({encodedToken:token, postId:data._id}))
-    }
-  }
-  const bookmarkHandler = async () =>{
-
-    if (findIfBookmarked()){
-      dispatch(postRemoveBookmarkPost({encodedToken:token, postId:data._id}))
-    }else{
-      dispatch(postBookmarkPost({encodedToken:token, postId:data._id}))
-    }
-  }
 
   return (
     <div className="post-card-container">
@@ -118,8 +90,8 @@ export const PostCard = ({ data, postInfo }) => {
               <i className="fa-solid fa-ellipsis"></i>
               {viewCardOptionModal && (
                 <div className="post-options-modal-container">
-                  <p className="post-options-modal-options" onClick={editPostHandler}>Edit Comment</p>
-                  <p className="post-options-modal-options" onClick={deletePostHandler}>Delete Comment</p>
+                  <p className="post-options-modal-options" onClick={editCommentHandler}>Edit Comment</p>
+                  <p className="post-options-modal-options" onClick={deleteCommentHandler}>Delete Comment</p>
                 </div>
               )}
             </div>
@@ -128,26 +100,16 @@ export const PostCard = ({ data, postInfo }) => {
         <div className="post-content-body-box">
           <p
             className="post-content-body-box-text"
-            onClick={navigateToPostFunc}
           >
-            {content} 
+            {text} 
           </p>
         </div>
         <div
-          className={"post-content-buttons-box"}
+          className={"post-content-buttons-box post-content-buttons-right"}
         >
             <>
-              <i className={findIfLiked()  ? "fas fa-heart liked": "far fa-heart"} onClick= {likeHandler}>
-                <span className="post-card-icon-data">{likes?.likeCount}</span>
-              </i>
-              <i className="far fa-comment-alt" onClick={navigateToPostFunc}>
-                <span className="post-card-icon-data">{comments?.length}</span>
-              </i>
-              <i className="fas fa-share-alt" onClick={()=>console.log(findIfBookmarked())}></i>
-              <i
-                className={findIfBookmarked() ? "fas fa-bookmark bookmark-icon": "far fa-bookmark"}
-                onClick={bookmarkHandler}></i>
-
+              <i className="fas fa-arrow-up"></i>
+              <i className="fas fa-arrow-down" onClick={()=>console.log(data)}></i>
             </>
         </div>
       </div>

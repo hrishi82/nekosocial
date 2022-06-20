@@ -1,16 +1,19 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "./newpostmodal.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "../homepage/NewPostModal/newpostmodal.css";
 import { useSelector,useDispatch } from "react-redux";
-import { newPost, editPost, toggleCommentInputModal } from "../../../store/postSlice";
-import {setFormData, resetFormData} from "../../../store/utilitiesSlice"
+import { editCommentInPost, toggleCommentInputModal } from "../../store/postSlice";
+import {setFormData, resetFormData} from "../../store/utilitiesSlice"
 
 
-export const NewPostModal = () => {
+
+export const EditCommentModal = () => {
 
   const  {token}  = useSelector(store=>store.auth);
-  const  {posts, displayCommentInputModal}  = useSelector(store=>store.posts);
-  const  {formData}  = useSelector(store=>store.utilities);
+  const  { displayCommentInputModal}  = useSelector(store=>store.posts);
+  const  {formData, postInformation}  = useSelector(store=>store.utilities);
   
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -22,30 +25,21 @@ export const NewPostModal = () => {
     if (!token) {
       navigate("/loginpage");
     }
-
-    let indexID = posts.findIndex((el) => el?._id === formData?._id);
-
-    if (indexID !== -1) {
-      dispatch(editPost({
+      dispatch(editCommentInPost({
         encodedToken: token,
-        postData: formData,
-        postId: formData._id,
+        commentData: formData.text,
+        postId: postInformation._id,
+        commentId: formData._id,
       }));
       dispatch(resetFormData())
       dispatch(toggleCommentInputModal())
-    } else {
-      dispatch(newPost({
-        encodedToken: token,
-        postData: formData,
-      }));
-      dispatch(resetFormData())
-      dispatch(toggleCommentInputModal())
-    }
+    
   };
 
   const handleFormData = (e) => {
     dispatch(setFormData({ ...formData, [e.target.name]: e.target.value }));
   };
+
 
 
   return (
@@ -62,8 +56,8 @@ export const NewPostModal = () => {
                 <textarea
                   className="card-topic-summary-input"
                   placeholder="Text here..."
-                  name="content"
-                  value= {formData?.content}
+                  name="text"
+                  value={formData?.text}
                   onChange={(e) => handleFormData(e)}
                 />
               </p>

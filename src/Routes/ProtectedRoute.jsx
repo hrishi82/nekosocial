@@ -1,8 +1,9 @@
 
 import { Navigate, Outlet } from "react-router-dom";
-import { useAuth } from "../context/authContext";
+import { useSelector, useDispatch } from "react-redux";
 
 export const ProtectedRoute = ({children}) => {
-	const { token } = useAuth();
+	const  {token}  = useSelector(store=>store.auth)
+	// console.log(token)
 	return token ? children : <Navigate to="/loginpage" replace/>;
 };

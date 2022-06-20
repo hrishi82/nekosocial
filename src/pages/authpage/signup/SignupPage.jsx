@@ -1,49 +1,51 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../../../context/authContext";
-import { useData } from "../../../context/dataContext";
-import {signupServiceHandler} from "../../../services/services"
+import { ToastHandler } from "../../../utils/toastutils";
+import { useDispatch } from "react-redux";
+import { signupHandler } from "../../../store/authenticationSlice";
+import { useSelector } from "react-redux";
 
 export const SignupPage = () => {
 
-    const [signupForm, setSignupForm] = useState({name: "", email: "", password: ""})
+    const [signupForm, setSignupForm] = useState({firstname: "", lastname:"", username: "", password: ""})
 
-    const {dispatch} = useData()
-    const {token, setToken, user, setUser} = useAuth()
+    const {token} = useSelector(store=>store.auth)
+
     const navigate = useNavigate();
+    const dispatch = useDispatch()
 
-
-
-      function formHandler(e){
+    function formHandler(e){
         e.preventDefault()
 
-        const {name, email, password} = signupForm
-        if (email && password && name !== '') {
+        const {firstname, lastname, username, password} = signupForm
+        if (firstname && lastname && username && password !== '') {
             (async () => {
-              signupUser(email, password, name);
+              signupUser( firstname, lastname, username, password);
             })();
+        }else{
+          ToastHandler("error", "Please enter valid username and password");
         }
     }
 
-    const signupUser = async (email, password, name) => {
+    const signupUser = async (firstname, lastname, username, password) => {
         try {
-          const response = await signupServiceHandler({ email, password, name });
-          if (response.status === 201) {
-            localStorage.setItem(
-              'login',
-              JSON.stringify({
-                token: response.data.encodedToken,
-                user: response.data.createdUser,
-              })
-            );
-            setUser(response.data.createdUser);
-            setToken(response.data.encodedToken);
-            navigate('/homepage');
-          }
+          dispatch(signupHandler({
+            username: signupForm.username,
+            password: signupForm.password,
+            firstName: signupForm.firstName,
+            lastName: signupForm.lastName,
+          }))
+          
         } catch (error) {
           console.error(error);
         }
       };
+
+      useEffect(()=>{
+        if(token){
+          navigate("/homepage", { replace: true })
+        }
+      }, [token, navigate])
 
   return (
     <div className="auth-page-container">
@@ -53,13 +55,17 @@ export const SignupPage = () => {
         </div>
 
         <div className="input">
-          <label>Name</label>
-          <input className="input-txt" type="name" value={signupForm.name} onChange={(e)=>setSignupForm({...signupForm, name: e.target.value})} />
+          <label>First Name</label>
+          <input className="input-txt" type="name" value={signupForm.firstname} onChange={(e)=>setSignupForm({...signupForm, firstname: e.target.value})} />
+        </div>  
+        <div className="input">
+          <label>Last Name</label>
+          <input className="input-txt" type="name" value={signupForm.lastname} onChange={(e)=>setSignupForm({...signupForm, lastname: e.target.value})} />
         </div>  
 
         <div className="input">
           <label>Email</label>
-          <input className="input-txt" type="email" value={signupForm.email} onChange={(e)=>setSignupForm({...signupForm, email: e.target.value})}/>
+          <input className="input-txt" type="email" value={signupForm.username} onChange={(e)=>setSignupForm({...signupForm, username: e.target.value})}/>
         </div>
 
         <div className="input">

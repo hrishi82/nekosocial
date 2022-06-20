@@ -1,12 +1,8 @@
 import "../asidebar.css";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useAuth } from "../../../context/authContext";
-import { useData } from "../../../context/dataContext";
 
 export const RightAsideBar = () => {
-  const { token, setToken, setUser } = useAuth();
-  const { state, dispatch } = useData();
-  const { displaySidebar } = state;
+
   const navigate = useNavigate();
 
   return (

@@ -1,16 +1,18 @@
 import { useState, useEffect } from "react";
-import { useAuth } from "../../../context/authContext";
-import { useData } from "../../../context/dataContext";
 import { useNavigate } from "react-router-dom";
 import "./postinput.css";
-import { postPostServiceHandler } from "../../../services/services";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import {newPost} from "../../../store/postSlice"
+import { useSelector, useDispatch } from "react-redux";
 
 export const PostInput = () => {
-  const { state, dispatch, formData, setFormData, initialFormData } = useData();
-  const { token, user } = useAuth();
+
+  let initialData = {content:"", comments:[]}
+  const [contentData, setContentData] = useState(initialData)
+
+  const { token } = useSelector(store=>store.auth)
   const navigate = useNavigate();
+  const dispatch = useDispatch()
 
   const formSubmitHandler = async (e) => {
     e.preventDefault();
@@ -19,21 +21,12 @@ export const PostInput = () => {
       navigate("/loginpage");
     }
 
-    let postResponse = await postPostServiceHandler({
-      encodedToken: token,
-      postData: formData
-    });
-
     try {
-      if (postResponse.status === 200 || postResponse.status === 201) {
-        dispatch({ type: "SET_ALL_POSTS", payload: postResponse.data.posts });
-        setFormData(initialFormData);
-
-        toast.success("Post Posted!", {
-          position: "bottom-right",
-          autoClose: 1500,
-        });
-      }
+      dispatch(newPost({
+        encodedToken: token,
+        postData: contentData
+      }))
+      setContentData(initialData)
     } catch (err) {
       console.log(err);
     }
@@ -56,8 +49,8 @@ export const PostInput = () => {
                 className="post-input-summary-input"
                 placeholder="Text here..."
                 name="content"
-                onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-                value={formData.content}
+                onChange={(e) => setContentData({ ...contentData, content: e.target.value })}
+                value={contentData.content}
               />
             </div>
             <div className="post-input-button-container">
@@ -77,7 +70,6 @@ export const PostInput = () => {
           </div>
         </div>
       </form>
-      <ToastContainer />
     </>
   );
 };

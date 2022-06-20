@@ -1,21 +1,45 @@
 import ReactTimeAgo from "react-time-ago";
-import { useData } from "../../context/dataContext";
-import { useAuth } from "../../context/authContext";
 import { useNavigate } from "react-router-dom";
-import { postCommentToPostServiceHandler } from "../../services/services";
+import {postCommentToPost, postLikeToPost, postDislikeToPost} from "../../store/postSlice"
 import {useState, useEffect} from "react"
+import { useSelector, useDispatch } from "react-redux";
+import {postBookmarkPost, postRemoveBookmarkPost} from "../../store/authenticationSlice"
+import "../main.css"
 
 export const SinglePost = ({ singlepostdata }) => {
+
   const { username, content, updatedAt, likes } = singlepostdata;
   const [commentData, setCommentData] = useState('')
 
   let formatedDate = new Date(updatedAt);
 
-  const {token, user} = useAuth()
-  const {state, dispatch} = useData()
-  const navigate = useNavigate()
+  const {token, user} = useSelector(store => store.auth)
+  const {users} = useSelector(store => store.users)
 
-  let postUserData = state.allUsers.filter(el=> el.username === singlepostdata?.username)[0] 
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+  let postUserData = users.filter(el=> el.username === singlepostdata?.username)[0] 
+
+  const findIfLiked = () => singlepostdata?.likes?.likedBy.filter(el=>el?.username === user?.username).length!==0
+  const findIfBookmarked = () => user?.bookmarks.filter(postID=> postID=== singlepostdata._id).length!==0
+
+  const likeHandler = async () =>{
+
+    if (findIfLiked()){
+      dispatch(postDislikeToPost({encodedToken:token, postId:singlepostdata._id}))
+    }else{
+      dispatch(postLikeToPost({encodedToken:token, postId:singlepostdata._id}))
+    }
+  }
+  const bookmarkHandler = async () =>{
+
+    if (findIfBookmarked()){
+      dispatch(postRemoveBookmarkPost({encodedToken:token, postId:singlepostdata._id}))
+    }else{
+      dispatch(postBookmarkPost({encodedToken:token, postId:singlepostdata._id}))
+    }
+  }
 
   const postCommentHandlerFunc = async (e) =>{
     e.preventDefault()
@@ -23,20 +47,8 @@ export const SinglePost = ({ singlepostdata }) => {
         navigate("/loginpage")
     }
     try{
-        let postresp = await postCommentToPostServiceHandler({encodedToken: token, commentData: commentData, postId: singlepostdata._id})
-
-        if(postresp.status === 200 || postresp.status === 201){
-
-            const newPostsData = state.allPosts.map((el) => {
-                if(el.username === singlepostdata.username){
-                    return {...el, comments:postresp.data.comments}
-                }else{
-                    return el
-                }
-            })
-            dispatch({ type: "SET_ALL_POSTS", payload:newPostsData})
-            setCommentData('');
-        }
+        dispatch(postCommentToPost({encodedToken: token, commentData: commentData, postId: singlepostdata._id}))
+        setCommentData('');
     }catch(err){
         console.log(err)
     }
@@ -53,7 +65,7 @@ export const SinglePost = ({ singlepostdata }) => {
             </div>
             <div className="single-post-content-header-box">
               <div className="single-post-content-header-box-left">
-                <div className="single-post-input-avtar-box">
+                <div className="single-post-input-avtar-box" onClick={()=>navigate(`/profilepage/${username}`)}>
                   <img
                     src={
                         postUserData?.profilePicture
@@ -90,10 +102,11 @@ export const SinglePost = ({ singlepostdata }) => {
             </div>
 
             <div className="single-post-content-buttons-box">
-              <i className="far fa-heart"></i>
+              <i className={findIfLiked()  ? "fas fa-heart liked": "far fa-heart"} onClick= {likeHandler}></i>
               <i className="far fa-comment-alt"></i>
               <i className="fas fa-share-alt"></i>
-              <i className="fas fa-bookmark bookmark-icon"></i>
+              <i className={findIfBookmarked() ? "fas fa-bookmark bookmark-icon": "far fa-bookmark"}
+                onClick={bookmarkHandler}></i>
             </div>
           </div>
         </div>

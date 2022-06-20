@@ -2,11 +2,10 @@ import { LeftAsideBar, RightAsideBar } from "../../components";
 import "../main.css";
 import {toggleCommentInputModal} from "../../store/postSlice"
 import { useDispatch, useSelector } from "react-redux";
-import { Mainfeed } from "./Mainfeed/Mainfeed";
-import {NewPostModal} from "./NewPostModal/NewPostModal"
+import {NewPostModal} from "../homepage/NewPostModal/NewPostModal"
+import {Profile} from "./Profile"
 
-
-export const HomePage = () => {
+export const ProfilePage = () => {
 
   const dispatch = useDispatch()
   const {displayCommentInputModal} = useSelector(store => store.posts)
@@ -22,7 +21,7 @@ export const HomePage = () => {
       ></div>
       <div className="home-page-container relative">
         <LeftAsideBar />
-        <Mainfeed />
+        <Profile/>
         <RightAsideBar />
       </div>
     </>
