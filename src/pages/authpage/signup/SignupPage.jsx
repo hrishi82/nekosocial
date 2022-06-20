@@ -3,10 +3,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { ToastHandler } from "../../../utils/toastutils";
 import { useDispatch } from "react-redux";
 import { signupHandler } from "../../../store/authenticationSlice";
+import { useSelector } from "react-redux";
 
 export const SignupPage = () => {
 
     const [signupForm, setSignupForm] = useState({firstname: "", lastname:"", username: "", password: ""})
+
+    const {token} = useSelector(store=>store.auth)
 
     const navigate = useNavigate();
     const dispatch = useDispatch()
@@ -38,6 +41,12 @@ export const SignupPage = () => {
         }
       };
 
+      useEffect(()=>{
+        if(token){
+          navigate("/homepage", { replace: true })
+        }
+      }, [token, navigate])
+
   return (
     <div className="auth-page-container">
       <div className="auth-content-container">
@@ -56,7 +65,7 @@ export const SignupPage = () => {
 
         <div className="input">
           <label>Email</label>
-          <input className="input-txt" type="email" value={signupForm.email} onChange={(e)=>setSignupForm({...signupForm, email: e.target.value})}/>
+          <input className="input-txt" type="email" value={signupForm.username} onChange={(e)=>setSignupForm({...signupForm, username: e.target.value})}/>
         </div>
 
         <div className="input">

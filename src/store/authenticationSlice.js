@@ -4,7 +4,8 @@ import {
   loginServiceHandler,
   signupServiceHandler,
   postBookmarkServiceHandler,
-  postRemoveBookmarkServiceHandler
+  postRemoveBookmarkServiceHandler,
+  editProfileServicehandler
 } from "../services/services";
 
 const initialState = {
@@ -29,10 +30,9 @@ export const loginHandler = createAsyncThunk(
 
 export const signupHandler = createAsyncThunk(
   "auth/signupHandler",
-  async ({ email, password, firstName,lastName, navigate }, thunkAPI) => {
+  async ({ firstName,lastName, username, password }, thunkAPI) => {
     try {
-      const response = await signupServiceHandler({ email, password, firstName, lastName });
-      navigate("/homepage");
+      const response = await signupServiceHandler({ firstName,lastName, username, password  });
       return response.data;
     } catch (err) {
         thunkAPI.rejectWithValue(err.response.data);
@@ -71,6 +71,15 @@ export const postRemoveBookmarkPost = createAsyncThunk(
   }
 );
 
+export const editUserProfile = createAsyncThunk('auth/editUserProfile', async ({userData, encodedToken}) => {
+  try {
+    const response = await editProfileServicehandler(userData, encodedToken);
+    return response.data.user;
+  } catch (error) {
+    console.error(error);
+  }
+});
+
 
 const authenticationSlice = createSlice({
   name: "auth",
@@ -80,7 +89,7 @@ const authenticationSlice = createSlice({
       localStorage.removeItem("login");
       state.token = null;
       state.user = null;
-      ToastHandler("success", "Logged out");
+      ToastHandler("success", "Sucessfully logged out!");
     },
   },
   extraReducers: {
@@ -101,13 +110,13 @@ const authenticationSlice = createSlice({
       console.error(action.payload);
     },
     [signupHandler.fulfilled]: (state, action) => {
-      state.user = action.payload.foundUser;
+      state.user = action.payload.createdUser;
       state.token = action.payload.encodedToken;
       localStorage.setItem(
         "login",
         JSON.stringify({
           token: action.payload.encodedToken,
-          user: action.payload.foundUser,
+          user: action.payload.createdUser,
         })
       );
       ToastHandler("success", "Successfully signed in!");
@@ -127,6 +136,13 @@ const authenticationSlice = createSlice({
       ToastHandler("info", "Post removed from bookmarks!");
     },
     [postRemoveBookmarkPost.rejected]: (state, action) => {
+        console.error(action.payload)
+    },
+    [editUserProfile.fulfilled]: (state, action) => {
+      state.user = action.payload;
+      ToastHandler("success", "Profile Updated!");
+    },
+    [editUserProfile.rejected]: (state, action) => {
         console.error(action.payload)
     }
   },

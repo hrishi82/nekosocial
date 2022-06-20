@@ -40,7 +40,7 @@ export const posts = [
       ],
       dislikedBy: [],
     },
-    username: "adarshbalika",
+    username: "pandacat",
     createdAt: formatDate(),
     updatedAt: formatDate(),
     comments: [
@@ -137,6 +137,77 @@ export const posts = [
         updatedAt: formatDate(),
       },
     ],
+  },
+  {
+    _id: "post3-feffakhfjsdbflvjnejbf",
+    content:
+      "Need refferals",
+    likes: {
+      likeCount: 0,
+      likedBy: [],
+      dislikedBy: [],
+    },
+    username: "goodboi",
+    createdAt: formatDate(),
+    updatedAt: formatDate(),
+    comments: []
+  },
+  {
+    _id: "post4-feffoiyjtsddbflvjnejbf",
+    content:
+      "What’s the first thing you do when your code doesn’t work?",
+    likes: {
+      likeCount: 0,
+      likedBy: [],
+      dislikedBy: [],
+    },
+    username: "toastedelvis",
+    createdAt: formatDate(),
+    updatedAt: formatDate(),
+    comments: []
+  },
+  {
+    _id: "post5-kngbknndfigernejbf",
+    content:
+      "Finalised a flat today!",
+    likes: {
+      likeCount: 0,
+      likedBy: [],
+      dislikedBy: [],
+    },
+    username: "ratia",
+    createdAt: formatDate(),
+    updatedAt: formatDate(),
+    comments: []
+  },
+  {
+    _id: "post5-kngbknndfigernejbf",
+    content:
+      "Last week was so busy, I just couldn't feel the weekend. And this week is going to be the same!",
+    likes: {
+      likeCount: 0,
+      likedBy: [],
+      dislikedBy: [],
+    },
+    username: "danchuo",
+    createdAt: formatDate(),
+    updatedAt: formatDate(),
+    comments: []
+  },
+  
+  {
+    _id: "post6-sjdvbalsdjblvaf",
+    content:
+      "I want to eat and sleep all day",
+    likes: {
+      likeCount: 0,
+      likedBy: [],
+      dislikedBy: [],
+    },
+    username: "jiewliew",
+    createdAt: formatDate(),
+    updatedAt: formatDate(),
+    comments: []
   },
   
 ];

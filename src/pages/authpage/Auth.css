@@ -105,11 +105,6 @@
 }
 
 
-.btn-secondary:hover{
-    color: var(--text-default-clr) 
-}
-
-
 
 @media screen and (max-width: 800px){
     .logout-container{

@@ -7,16 +7,16 @@ export const loginServiceHandler = async (username, password) =>
   });
 
 export const signupServiceHandler = async ({
-  username,
-  password,
   firstName,
   lastName,
+  username,
+  password
 }) =>
   await axios.post(`/api/auth/signup`, {
-    username,
-    password,
     firstName,
     lastName,
+    username,
+    password
   });
 
 export const getUsersServiceHandler = async () => {
@@ -161,3 +161,36 @@ export const postRemoveBookmarkServiceHandler = async (
     }
   );
 };
+
+
+
+export const editProfileServicehandler = (userData, encodedToken) =>
+  axios.post(
+    '/api/users/edit',
+    { userData },
+    {
+      headers: {authorization: encodedToken },
+    },
+  );
+
+export const followUserServiceHandler = (followUserId, encodedToken) =>
+  axios.post(
+    `/api/users/follow/${followUserId}`,
+    {},
+    {
+      headers: {authorization: encodedToken },
+    },
+  );
+export const unfollowUserServiceHandler = (followUserId, encodedToken) =>
+  axios.post(
+    `/api/users/unfollow/${followUserId}`,
+    {},
+    {
+      headers: {authorization: encodedToken },
+    },
+  );
+
+
+export const getUserServiceHandler = (username) => axios.get(`/api/users/${username}`);
+
+export const getUserPostsServiceHandler = (username) => axios.get(`/api/posts/user/${username}`);

@@ -8,7 +8,8 @@
 }
 
 .mainfeed-container{
-    margin: 0 2rem;
+    margin: 0 2.5rem;
+    width: 35rem;
 }
 
 .mainfeed-info-action-container{
@@ -61,6 +62,46 @@
       display: block;
   }
 
+
+  /************** Filter Modal ************/
+
+.filter-modal-master-container{
+  position:absolute;
+  border-radius: 0.3rem;
+  top:0.5rem;
+  right: 1rem;
+  overflow: hidden;
+  background-color: var(--white-bg);
+  padding: 0.5rem;
+  border: 1px solid black;
+  width: max-content;
+  box-shadow: rgba(99, 99, 99, 0.8) 0px 2px 8px 0px;
+  font-size: 0.8rem;
+  font-weight: 250;
+}
+
+.filter-modal-text{
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.2rem;
+  border-bottom: 1px solid var(--text-grey);
+}
+
+.filter-modal-options{
+  text-align: left;
+  padding: 0.5rem;
+}
+.filter-modal-options:hover{
+  background-color: var(--light-grey-bg);
+  text-align: left;
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+.clear-filter-btn{
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--text-grey);
+}
 
 
 /* 

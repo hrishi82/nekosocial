@@ -13,8 +13,7 @@ export const LeftAsideBar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch()
 
-  const logoutFunc = (e) => {
-    e.preventDefault();
+  const logoutFunc = () => {
     dispatch(logoutHandler())
     navigate("/logoutpage");
   };
@@ -134,9 +133,9 @@ export const LeftAsideBar = () => {
               className={({ isActive }) =>
                 isActive ? "navlink-active" : "navlink"
               }
-              onClick={(e) => logoutFunc(e)}
+              onClick={logoutFunc}
             >
-              LOGOUT{" "}
+              LOGOUT
             </NavLink>
           ) : (
             <NavLink
