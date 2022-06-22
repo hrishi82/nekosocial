@@ -181,7 +181,7 @@ export const posts = [
     comments: []
   },
   {
-    _id: "post5-kngbknndfigernejbf",
+    _id: "post6-hnberowowfnejbf",
     content:
       "Last week was so busy, I just couldn't feel the weekend. And this week is going to be the same!",
     likes: {
@@ -196,7 +196,7 @@ export const posts = [
   },
   
   {
-    _id: "post6-sjdvbalsdjblvaf",
+    _id: "post7-sjdvbalsdjblvaf",
     content:
       "I want to eat and sleep all day",
     likes: {

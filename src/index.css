@@ -36,6 +36,7 @@
   /* Card */
   --dismiss-btn-background: black;
   --card-bg: white;
+  --card-hover-clr: rgb(238, 238, 238);  
 
   /* Search bar */
   --search-bar-bg-clr: rgb(31, 31, 31);
@@ -83,6 +84,11 @@ body {
 
 .avatar {
   margin: 0;
+}
+
+.avatar-size-xs{
+  height: 2rem;
+  width: 2rem;
 }
 
 /******** Badge ********/

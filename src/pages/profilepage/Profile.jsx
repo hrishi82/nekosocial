@@ -26,7 +26,7 @@ export const Profile = () => {
 
   const currentUserDetails = users?.find((user) => user.username === username);
 
-  const isFollowed = () => currentUserDetails?.followers.some((el) => el.username === user.username);
+  const isFollowed = () => currentUserDetails?.followers?.some((el) => el?.username === user?.username);
 
   useEffect(()=>{
     dispatch(getUserDetails(username))
@@ -73,7 +73,7 @@ export const Profile = () => {
           </div>
           <div className="profile-name-username-container">
             <h3 className="profile-name">
-              {currentUserDetails.firstName + " " + currentUserDetails.lastName}
+              {currentUserDetails?.firstName + " " + currentUserDetails?.lastName}
             </h3>
             <h3 className="profile-username">@{currentUserDetails.username}</h3>
           </div>
@@ -87,7 +87,7 @@ export const Profile = () => {
                 Edit Profile
               </button>
             )}
-            {username !== user.username && (
+            {username !== user?.username && (
               <button
                 className={`btn ${isFollowed() ? "btn-secondary-outline" : "btn-primary-outline"} profile-action-btn`}
                 onClick={followUnfollowHandlerFunc}
@@ -99,37 +99,37 @@ export const Profile = () => {
 
           <div className="profile-bio-wrapper">
             <p className="profile-bio">
-            {currentUserDetails.bio}
+            {currentUserDetails?.bio}
             </p>
           </div>
 
           <a
             className="link-no-decor profile-url-link"
-            href={currentUserDetails.link}
+            href={currentUserDetails?.link}
             target="_blank"
             rel="noreferrer"
           >
-            {currentUserDetails.link}
+            {currentUserDetails?.link}
           </a>
 
           <section className="profile-statistics-container">
             <div className="profile-stat-wrapper">
-              <h4 className="profile-stat-number">{currentUserDetails.following.length}</h4>
+              <h4 className="profile-stat-number">{currentUserDetails?.following?.length}</h4>
               <h4 className="profile-stat-name">Following</h4>
             </div>
             <div className="profile-stat-wrapper">
-              <h4 className="profile-stat-number">{userPosts.length}</h4>
+              <h4 className="profile-stat-number">{userPosts?.length}</h4>
               <h4 className="profile-stat-name">Posts</h4>
             </div>
             <div className="profile-stat-wrapper">
-              <h4 className="profile-stat-number">{currentUserDetails.followers.length}</h4>
+              <h4 className="profile-stat-number">{currentUserDetails?.followers?.length}</h4>
               <h4 className="profile-stat-name">Followers</h4>
             </div>
           </section>
         </section>
         <section className="profile-posts-container">
           <h3 className="profile-posts-title text-left">
-            Posts: {userPosts.length}
+            Posts: {userPosts?.length}
           </h3>
           <div className="profile-posts-wrapper">
             {userPosts?.map((el) => (

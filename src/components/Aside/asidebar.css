@@ -103,9 +103,47 @@
 
 
 
+/* Right Sidebar */
 
+.right-sidebar{
+    justify-content: flex-start;
+}
 
+.sidebar-explore-container{
+    margin-top: 1rem;
+    border: 1px solid var(--grey-bg);
+    list-style: none;
+    background-color: var(--card-bg);
+    border-radius: 0.3rem;
+    padding: 0.5rem;
+}
 
+.sidebar-explore-list-item{
+    list-style: none;    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1rem 0;
+    padding: 0.5rem;
+}
+
+.sidebar-explore-list-item>div{   
+    display: flex;
+    align-items: center;
+}
+
+.sidebar-explore-list-item-label{
+    font-size: 0.8rem;
+    margin-left: 0.5rem;
+    cursor: pointer;
+}
+
+.sidebar-explore-list-item-btn{
+    font-size: 0.8rem;
+    padding: 0.4rem;
+    border: none;
+    outline: none;
+}
 
 
 /* Responsive Style */

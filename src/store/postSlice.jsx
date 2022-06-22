@@ -13,7 +13,7 @@ import {
 
 const initialState = {
   posts: [],
-  postSorting: [],
+  postSorting: '',
   displayCommentInputModal: false,
 };
 
@@ -157,6 +157,9 @@ const postSlice = createSlice({
     toggleCommentInputModal: (state) => {
       state.displayCommentInputModal = !state.displayCommentInputModal;
     },
+    postSortingHandler: (state, action) => {
+      state.postSorting = action.payload;
+    },
   },
   extraReducers: {
     [getAllPosts.fulfilled]: (state, action) => {
@@ -217,4 +220,4 @@ const postSlice = createSlice({
 });
 
 export const postReducer = postSlice.reducer;
-export const { toggleCommentInputModal } = postSlice.actions;
+export const { toggleCommentInputModal, postSortingHandler } = postSlice.actions;

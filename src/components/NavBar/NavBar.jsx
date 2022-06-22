@@ -20,7 +20,8 @@ const NavBar = () => {
       </nav>
 
       <nav className="nav-items-right">
-        <p>GITHUB</p>
+        <a href="https://github.com/hrishi82/nekosocial" className="link-no-decor" target="_blank" rel="noreferrer">GITHUB</a>
+        {/* <a>GITHUB</a> */}
       </nav>
 
     </nav>
