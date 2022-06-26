@@ -36,7 +36,6 @@
   - Sign-up
   - Login
   - Logout
-- Responsive ✅
    
 
 
