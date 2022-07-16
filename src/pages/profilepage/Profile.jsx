@@ -3,7 +3,7 @@ import "./profile.css";
 import { toggleCommentInputModal } from "../../store/postSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { NewPostModal } from "../homepage/NewPostModal/NewPostModal";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { PostCard } from "../homepage/PostCard/PostCard";
 import { EditProfileModal } from "./EditProfileModal";
 import { useEffect, useState } from "react";
@@ -25,7 +25,7 @@ export const Profile = () => {
   const { currUserDetails, userPosts } = useSelector((store) => store.profile);
 
   const currentUserDetails = users?.find((user) => user.username === username);
-
+  
   const isFollowed = () => currentUserDetails?.followers?.some((el) => el?.username === user?.username);
 
   useEffect(()=>{
@@ -75,7 +75,7 @@ export const Profile = () => {
             <h3 className="profile-name">
               {currentUserDetails?.firstName + " " + currentUserDetails?.lastName}
             </h3>
-            <h3 className="profile-username">@{currentUserDetails.username}</h3>
+            <h3 className="profile-username">@{currentUserDetails.userHandler}</h3>
           </div>
 
           <div className="profile-action-btn-wrapper">

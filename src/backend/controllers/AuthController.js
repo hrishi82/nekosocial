@@ -37,6 +37,8 @@ export const signupHandler = function (schema, request) {
       username,
       password,
       ...rest,
+      userHandler: username.split('@')[0],
+      ...rest,
       followers: [],
       following: [],
       bookmarks: [],
