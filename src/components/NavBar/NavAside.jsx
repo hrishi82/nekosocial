@@ -2,11 +2,13 @@ import "../asidebar.css";
 import { NavLink, useNavigate } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
-import { logoutHandler } from "../../../store/authenticationSlice";
-import {toggleCommentInputModal} from "../../../store/postSlice"
+import { logoutHandler } from "../../../src/store/authenticationSlice";
+import {toggleCommentInputModal} from "../../../src/store/postSlice"
+import {toggleSidebar} from "../../../src/store/utilitiesSlice"
 
-export const LeftAsideBar = () => {
+export const NavAside = () => {
   const { token, user } = useSelector(store => store.auth)
+  const { displaySidebar } = useSelector(store => store.utilities)
 
   const navigate = useNavigate();
   const dispatch = useDispatch()
@@ -21,7 +23,7 @@ export const LeftAsideBar = () => {
   }
 
   return (
-    <aside className="sidebar">
+    <aside className={`sidebar ${displaySidebar && "sidebar-show"} `}>
       <ul className="sidebar-list-container">
         <li className="sidebar-li-item">
           <NavLink
@@ -29,7 +31,7 @@ export const LeftAsideBar = () => {
             className={({ isActive }) =>
               isActive ? "navlink-active" : "navlink"
             }
-            
+            onClick={() => dispatch(toggleSidebar())}
           >
             <div className="sidebar-icon-container">
               <i className="fa-solid fa-house-chimney"></i>
@@ -44,7 +46,7 @@ export const LeftAsideBar = () => {
             className={({ isActive }) =>
               isActive ? "navlink-active" : "navlink"
             }
-            
+            onClick={() => dispatch(toggleSidebar())}
           >
             <div className="sidebar-icon-container">
               <i className="fa-solid fa-rocket"></i>
@@ -59,7 +61,7 @@ export const LeftAsideBar = () => {
             className={({ isActive }) =>
               isActive ? "navlink-active" : "navlink"
             }
-            
+            onClick={() => dispatch(toggleSidebar())}
           >
             <div className="sidebar-icon-container">
               <i className="fa-solid fa-bookmark"></i>
@@ -74,7 +76,7 @@ export const LeftAsideBar = () => {
             className={({ isActive }) =>
               isActive ? "navlink-active" : "navlink"
             }
-            
+            onClick={() => dispatch(toggleSidebar())}
           >
             <div className="sidebar-icon-container">
               <i className="fa-solid fa-bell"></i>
@@ -89,7 +91,7 @@ export const LeftAsideBar = () => {
             className={({ isActive }) =>
               isActive ? "navlink-active" : "navlink"
             }
-            
+            onClick={() => dispatch(toggleSidebar())}
           >
             {" "}
             <div className="sidebar-icon-container">
@@ -118,7 +120,7 @@ export const LeftAsideBar = () => {
               className={({ isActive }) =>
                 isActive ? "navlink-active" : "navlink"
               }
-              
+              onClick={() => dispatch(toggleSidebar())}
             >
               PROFILE
             </NavLink>
@@ -141,7 +143,7 @@ export const LeftAsideBar = () => {
               className={({ isActive }) =>
                 isActive ? "navlink-active" : "navlink"
               }
-              
+              onClick={() => dispatch(toggleSidebar())}
             >
               LOGIN
             </NavLink>

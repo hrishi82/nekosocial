@@ -1,17 +1,16 @@
 import { Link, useNavigate } from "react-router-dom";
 import "./navbar.css"
+import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import {toggleSidebar} from "../../../src/store/utilitiesSlice"
 
 const NavBar = () => {
 
-
-  const toggleSidebar = () =>{
-    // dispatch({type: "TOGGLE_SIDEBAR"})
-  }
+  const dispatch = useDispatch()
 
   return (
     <nav className="nav-wrapper">
       <nav className="nav-items-left">
-      <i className="fa-solid fa-bars nav-menu-option" onClick={toggleSidebar}></i>
         <h4 className="nav-title">
           <Link to="/homepage" className="link-no-decor">
             nekoSocial
@@ -20,8 +19,13 @@ const NavBar = () => {
       </nav>
 
       <nav className="nav-items-right">
-        <a href="https://github.com/hrishi82/nekosocial" className="link-no-decor" target="_blank" rel="noreferrer">GITHUB</a>
-        {/* <a>GITHUB</a> */}
+      <i
+            className="fas fa-bars nav-menu-option"
+            onClick={() => {
+              console.log("ok")
+              dispatch(toggleSidebar())
+            }}
+          ></i>
       </nav>
 
     </nav>

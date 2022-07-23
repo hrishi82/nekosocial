@@ -12,7 +12,7 @@ export const LandingPage = () => {
     if (e.target.innerText === "Home") {
       navigate("/homepage");
     } else {
-      navigate("/loginpage");
+      navigate("/signuppage");
     }
   };
 
