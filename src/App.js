@@ -2,7 +2,7 @@ import "./App.css";
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import Mockman from "mockman-js";
 import { ProtectedRoute } from "../src/Routes/ProtectedRoute";
-import { NavBar } from "./components";
+import { NavBar, NavAside } from "./components";
 import { ToastContainer } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -45,6 +45,7 @@ function App() {
   return (
     <div className="App relative">
       <NavBar />
+      <NavAside/>
       <Routes>
         <Route path="/mockman" element={<MockAPI />} />
         <Route path="/" element={<LandingPage />} />

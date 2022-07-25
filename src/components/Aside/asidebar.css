@@ -62,45 +62,10 @@
 
 
 
-/* Search bar */
-
-.search-wrapper{
-    background-color: var(--white-bg);
-    padding: 0.2rem 0.5rem;
-    border-radius: 0.2rem;
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    border: 1px solid var(--seperator-line)
-}
-
-.search-bar{
-    border: none;
-    background-color: transparent;
-    padding: 0.6rem 0.6rem;
-    color: var(--text-default-clr);
-    font-size: 1rem;
-    width: 8rem;
-}
-.search-bar:focus{
-    outline: none;
-    background-color: transparent;
-}
-
-.search-bar-btn{
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
-    margin-left: auto;
-}
-.search-bar-btn, .fa-search{
-    color: var(--text-default-clr);
-}
 
 .sidebar-list-container-bottom{
     margin-bottom: 3rem;
 }
-
 
 
 /* Right Sidebar */

@@ -22,7 +22,6 @@ const NavBar = () => {
       <i
             className="fas fa-bars nav-menu-option"
             onClick={() => {
-              console.log("ok")
               dispatch(toggleSidebar())
             }}
           ></i>
