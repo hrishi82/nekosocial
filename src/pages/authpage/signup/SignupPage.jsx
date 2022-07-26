@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 
 export const SignupPage = () => {
 
-    const [signupForm, setSignupForm] = useState({firstname: "", lastname:"", username: "", password: ""})
+    const [signupForm, setSignupForm] = useState({firstName: "", lastName:"", username: "", password: ""})
 
     const {token} = useSelector(store=>store.auth)
 
@@ -17,17 +17,17 @@ export const SignupPage = () => {
     function formHandler(e){
         e.preventDefault()
 
-        const {firstname, lastname, username, password} = signupForm
-        if (firstname && lastname && username && password !== '') {
+        const {firstName, lastName, username, password} = signupForm
+        if (firstName && lastName && username && password !== '') {
             (async () => {
-              signupUser( firstname, lastname, username, password);
+              signupUser( firstName, lastName, username, password);
             })();
         }else{
           ToastHandler("error", "Please enter valid username and password");
         }
     }
 
-    const signupUser = async (firstname, lastname, username, password) => {
+    const signupUser = async (firstName, lastName, username, password) => {
         try {
           dispatch(signupHandler({
             username: signupForm.username,
@@ -56,11 +56,11 @@ export const SignupPage = () => {
 
         <div className="input">
           <label>First Name</label>
-          <input className="input-txt" type="name" value={signupForm.firstname} onChange={(e)=>setSignupForm({...signupForm, firstname: e.target.value})} />
+          <input className="input-txt" type="name" value={signupForm.firstName} onChange={(e)=>setSignupForm({...signupForm, firstName: e.target.value})} />
         </div>  
         <div className="input">
           <label>Last Name</label>
-          <input className="input-txt" type="name" value={signupForm.lastname} onChange={(e)=>setSignupForm({...signupForm, lastname: e.target.value})} />
+          <input className="input-txt" type="name" value={signupForm.lastName} onChange={(e)=>setSignupForm({...signupForm, lastName: e.target.value})} />
         </div>  
 
         <div className="input">

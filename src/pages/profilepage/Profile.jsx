@@ -20,6 +20,8 @@ export const Profile = () => {
     (store) => store.posts
   );
 
+  
+
   const { users } = useSelector((store) => store.users);
   const { user, token } = useSelector((store) => store.auth);
   const { currUserDetails, userPosts } = useSelector((store) => store.profile);
@@ -75,7 +77,7 @@ export const Profile = () => {
             <h3 className="profile-name">
               {currentUserDetails?.firstName + " " + currentUserDetails?.lastName}
             </h3>
-            <h3 className="profile-username">@{currentUserDetails.userHandler}</h3>
+            <h3 className="profile-username">@{currentUserDetails.username}</h3>
           </div>
 
           <div className="profile-action-btn-wrapper">

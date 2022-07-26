@@ -19,6 +19,11 @@ export const EditProfileModal = ({ displayEditModal, setDisplayEditModal }) => {
     setDisplayEditModal(!displayEditModal);
   };
 
+  useEffect(()=>{
+    setProfileFormData(user)
+  }, [user])
+
+
   const handleFormData = (e) => {
     setProfileFormData({ ...profileFormData, [e.target.name]: e.target.value });
   };

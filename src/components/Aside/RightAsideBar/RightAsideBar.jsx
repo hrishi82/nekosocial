@@ -5,6 +5,7 @@ import {useSelector, useDispatch} from "react-redux"
 import {followUser, unfollowUser} from "../../../../src/store/userSlice"
 import {getUserDetails, getUserPosts} from "../../../../src/store/profileSlice"
 import {getAllUsers} from "../../../../src/store/userSlice"
+import {SearchBar} from "./SearchBar"
 
 export const RightAsideBar = () => {
   const { users } = useSelector(store => store.users)
@@ -40,19 +41,7 @@ export const RightAsideBar = () => {
 
   return (
     <aside className="sidebar right-sidebar">
-      <div className="searchbar-container">
-        <div className="search-wrapper">
-          <input
-            type="text"
-            placeholder="Search.."
-            name="search-bar"
-            className="search-bar"
-          />
-          <button type="submit" className="search-bar-btn">
-            <i className="fas fa-search"></i>
-          </button>
-        </div>
-      </div>
+      <SearchBar/>
       {peopleNotFollowed?.length !== undefined && peopleNotFollowed?.length > 0 && <div className="sidebar-explore-container">
         <ul>
           {peopleNotFollowed?.length !== undefined && peopleNotFollowed.map(el=>{

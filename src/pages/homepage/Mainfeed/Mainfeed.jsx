@@ -51,7 +51,7 @@ export const Mainfeed = () =>{
 return (    
     <div className="mainfeed-container">
         <PostInput/>
-        <div className="mainfeed-info-action-container">
+        {filteredData.length===0? <h4 className="add-posts-notif">Please add users to view posts</h4>: <div className="mainfeed-info-action-container">
             <p className="mainfeed-info-text">Feed</p>
             <div className="filter-modal-container relative" onClick={()=>setViewFilterModal(!viewFilterModal)}>
             <i className="fas fa-filter"></i>
@@ -66,7 +66,7 @@ return (
               )}
             </div>
             
-        </div>
+        </div>}
         {filteredData?.map(el=><PostCard key={el._id} data={el} />)}
     </div>
     )
