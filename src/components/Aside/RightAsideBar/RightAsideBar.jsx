@@ -1,6 +1,6 @@
 import "../asidebar.css";
 import { NavLink, useNavigate, Link } from "react-router-dom";
-import {useEffect} from "react"
+import {useState, useEffect} from "react"
 import {useSelector, useDispatch} from "react-redux"
 import {followUser, unfollowUser} from "../../../../src/store/userSlice"
 import {getUserDetails, getUserPosts} from "../../../../src/store/profileSlice"
@@ -8,6 +8,9 @@ import {getAllUsers} from "../../../../src/store/userSlice"
 import {SearchBar} from "./SearchBar"
 
 export const RightAsideBar = () => {
+
+  const [searchActive, setSearchActive] = useState(false)
+
   const { users } = useSelector(store => store.users)
   const { user,token } = useSelector(store => store.auth)
   const navigate = useNavigate();
@@ -41,8 +44,8 @@ export const RightAsideBar = () => {
 
   return (
     <aside className="sidebar right-sidebar">
-      <SearchBar/>
-      {peopleNotFollowed?.length !== undefined && peopleNotFollowed?.length > 0 && <div className="sidebar-explore-container">
+      <SearchBar setSearchActive={setSearchActive}/>
+      {!searchActive && peopleNotFollowed?.length !== undefined && peopleNotFollowed?.length > 0 && <div className="sidebar-explore-container">
         <ul className="right-sidebar-suggestion-container">
           {peopleNotFollowed?.length !== undefined && peopleNotFollowed.map(el=>{
             return(

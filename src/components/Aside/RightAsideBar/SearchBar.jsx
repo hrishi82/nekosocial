@@ -3,9 +3,11 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 
-export const SearchBar = () => {
+export const SearchBar = ({ setSearchActive}) => {
+
   const { users } = useSelector((store) => store.users);
-  const [searchResult, setSearchResult] = useState("");
+  const { user,token } = useSelector(store => store.auth)
+  const [searchResult, setSearchResult] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
   const navigate = useNavigate();
@@ -13,10 +15,27 @@ export const SearchBar = () => {
   const searchHandler = (e) => {
     let searchValue = e.target.value;
     setSearchQuery(e.target.value)
-    const filteredUsers = users.filter((el) => {
-      return el.username.includes(searchValue) ? el : null;
-    });
-    setSearchResult(filteredUsers);
+
+    // if(e.target.value !==""){
+    //   setSearchActive(true)
+    // }else{
+    //   setSearchActive(false)
+    //   setSearchQuery("")
+    //   setSearchResult("")
+    // }
+
+    if(e.target.value !==""){
+      setSearchActive(true)
+      const filteredUsers = users.filter((el) => {
+        return el.username.includes(searchValue) && el.username !== user.username ? el : null;
+      });
+      setSearchResult(filteredUsers);
+    }else{
+      setSearchActive(false)
+      setSearchResult([])
+    }
+
+
   };
 
   const navigateToProfileHandler = (el) => {
@@ -35,20 +54,22 @@ export const SearchBar = () => {
             value={searchQuery}
             onChange={(e) => searchHandler(e)}
           />
-          {searchResult === "" ? (
+          {searchResult.length === 0 ? (
             <button type="submit" className="search-bar-btn">
               <i className="fas fa-search"></i>
             </button>
           ) : (
             <button type="submit" className="search-bar-btn" onClick={()=>{
                 setSearchQuery("")
-                setSearchResult("")}}>
+                setSearchResult([])
+                setSearchActive(false)
+                }}>
               <i className="fas fa-times"></i>
             </button>
           )}
         </div>
 
-        {searchResult !== "" && searchResult.length !== 0 && (
+        {searchResult.length !== 0 && (
           <div className="searchbar-search-result-container">
             <ul className="search-result-table">
               {searchResult.map((el) => {
