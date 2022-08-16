@@ -12,7 +12,7 @@ export const LandingPage = () => {
     if (e.target.innerText === "Home") {
       navigate("/homepage");
     } else {
-      navigate("/signuppage");
+      navigate("/loginpage");
     }
   };
 
@@ -32,12 +32,12 @@ export const LandingPage = () => {
               className="btn btn-primary hero-btn"
               onClick={(e) => logoutHandler(e)}
             >
-              {token ? "Home" : "Signup"}
+              {token ? "Home" : "Login"}
             </button>
             <div className="secondary-hero-btn-container">
               {!token && (
-                <Link to="/loginpage" className="btn secondary-hero-btn">
-                  Already have an account?
+                <Link to="/signuppage" className="btn secondary-hero-btn">
+                  Dont have an account? Sign up!
                 </Link>
               )}
             </div>

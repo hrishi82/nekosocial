@@ -37,7 +37,6 @@ function App() {
 
   useEffect(() => {
     if (token) {
-      dispatch(getAllPosts());
       dispatch(getAllUsers());
     }
   }, [token, navigate, dispatch]);

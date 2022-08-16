@@ -5,11 +5,13 @@ import {useState, useEffect} from "react"
 import { useSelector, useDispatch } from "react-redux";
 import {postBookmarkPost, postRemoveBookmarkPost} from "../../store/authenticationSlice"
 import "../main.css"
+import { ToastHandler } from "../../utils/toastutils";
+import { ToastContainer } from "react-toastify";
 
 export const SinglePost = ({ singlepostdata }) => {
 
-  const { username, content, updatedAt, likes } = singlepostdata;
-  const [commentData, setCommentData] = useState('')
+  const { username, content, updatedAt, likes, uploadedImage } = singlepostdata;
+  const [commentData, setCommentData] = useState("")
 
   let formatedDate = new Date(updatedAt);
 
@@ -85,11 +87,18 @@ export const SinglePost = ({ singlepostdata }) => {
               </div>
 
               <div className="single-post-content-header-box-right">
-                <i className="fa-solid fa-ellipsis"></i>
+                {/* <i className="fa-solid fa-ellipsis"></i> */}
               </div>
             </div>
             <div className="single-post-content-body-box">
               <p className="single-post-content-body-box-text">{content}</p>
+              {singlepostdata?.uploadedImage !== "" && (
+            <img
+              src={singlepostdata?.uploadedImage}
+              alt="postIMG"
+              className="img-responsive"
+            />
+          )}
               <p className="single-post-content-timePosted">
                 {<ReactTimeAgo date={formatedDate.getTime()} locale="en-US" />}
               </p>
@@ -104,7 +113,11 @@ export const SinglePost = ({ singlepostdata }) => {
             <div className="single-post-content-buttons-box">
               <i className={findIfLiked()  ? "fas fa-heart liked": "far fa-heart"} onClick= {likeHandler}></i>
               <i className="far fa-comment-alt"></i>
-              <i className="fas fa-share-alt"></i>
+              {/* <i className="fas fa-share-alt" onClick={()=>{
+                navigator.clipboard.writeText(
+                  `https://nekosocial.vercel.app/singlepostpage/${username}/${singlepostdata._id}`
+                );
+              }}></i> */}
               <i className={findIfBookmarked() ? "fas fa-bookmark bookmark-icon": "far fa-bookmark"}
                 onClick={bookmarkHandler}></i>
             </div>
@@ -135,6 +148,7 @@ export const SinglePost = ({ singlepostdata }) => {
             <button className="btn btn-primary" onClick={(e)=>postCommentHandlerFunc(e)}>Post</button>
           </div>
         </div>
+
       </div>
     </>
   );

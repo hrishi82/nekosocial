@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { ToastHandler } from "../utils/toastutils";
 import {
   getPostsServiceHandler,
   editPostServiceHandler,
@@ -13,7 +14,7 @@ import {
 
 const initialState = {
   posts: [],
-  postSorting: '',
+  postSorting: 'LATEST',
   displayCommentInputModal: false,
 };
 
@@ -34,6 +35,7 @@ export const newPost = createAsyncThunk(
           encodedToken,
           postData,
         );
+        ToastHandler("Success", "New post added!");
         return resp.data.posts;
       } catch (err) {
         console.error(err);
@@ -170,9 +172,11 @@ const postSlice = createSlice({
     },
     [newPost.fulfilled]: (state, action) => {
         state.posts = action.payload;
+        ToastHandler("success", "Post created!");
     },
     [newPost.rejected]: (action) => {
       console.error(action.payload);
+      ToastHandler("error", "Error in posting post!");
     },
     [editPost.fulfilled]: (state, action) => {
         state.posts = action.payload;
@@ -182,9 +186,11 @@ const postSlice = createSlice({
     },
     [deletePost.fulfilled]: (state, action) => {
         state.posts = action.payload;
+        ToastHandler("success", "Post removed!");
     },
     [deletePost.rejected]: (action) => {
       console.error(action.payload);
+      ToastHandler("info", "Error in removing post");
     },
     [editCommentInPost.fulfilled]: (state, action) => {
         state.posts = action.payload;
@@ -194,24 +200,30 @@ const postSlice = createSlice({
     },
     [postCommentToPost.fulfilled]: (state, action) => {
         state.posts = action.payload;
+        ToastHandler("success", "Comment successfully added!");
     },
     [postCommentToPost.rejected]: (action) => {
       console.error(action.payload);
+      ToastHandler("info", "Error in adding comment to post!");
     },
     [deleteCommentFromPost.fulfilled]: (state, action) => {
         state.posts = action.payload;
+        ToastHandler("success", "Comment successfully removed!");
     },
     [deleteCommentFromPost.rejected]: (action) => {
       console.error(action.payload);
+      ToastHandler("info", "Error in removing comment from post!");
     },
     [postLikeToPost.fulfilled]: (state, action) => {
         state.posts = action.payload;
+        ToastHandler("success", "Post liked!");
     },
     [postLikeToPost.rejected]: (action) => {
       console.error(action.payload);
     },
     [postDislikeToPost.fulfilled]: (state, action) => {
         state.posts = action.payload;
+        ToastHandler("info", "Post disliked!");
     },
     [postDislikeToPost.rejected]: (action) => {
       console.error(action.payload);

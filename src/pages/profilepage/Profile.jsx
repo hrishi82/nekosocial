@@ -67,7 +67,7 @@ export const Profile = () => {
               src={
                 currentUserDetails?.profilePicture
                   ? currentUserDetails?.profilePicture
-                  : "https://res.cloudinary.com/dac2rwutk/image/upload/v1652162986/cat_ij5wno.jpg"
+                  : "https://res.cloudinary.com/dac2rwutk/image/upload/v1660390827/user_xotqed.png"
               }
               className="avatar avatar-size-lg"
               alt="avatar"

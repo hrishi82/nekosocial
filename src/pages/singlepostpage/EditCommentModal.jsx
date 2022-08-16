@@ -65,8 +65,8 @@ export const EditCommentModal = () => {
 
             <section className="card-footer-container">
               <div className="footer-btn-wrapper">
-                <i className="fa-regular fa-image"></i>
-                <i className="fa-regular fa-face-smile-beam"></i>
+                {/* <i className="fa-regular fa-image"></i>
+                <i className="fa-regular fa-face-smile-beam"></i> */}
               </div>
 
               <div className="footer-icon-btn-wrapper">

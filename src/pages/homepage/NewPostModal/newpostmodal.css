@@ -78,13 +78,11 @@
     padding: 0.7rem 1.5rem;
 }
 
-
-
-
   .viewModal{
       display: block;
   }
 
+ 
 
 
   @media screen and (max-width:800px) {

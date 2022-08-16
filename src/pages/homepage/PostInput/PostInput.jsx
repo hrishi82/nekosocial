@@ -2,17 +2,17 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./postinput.css";
 import "react-toastify/dist/ReactToastify.css";
-import {newPost} from "../../../store/postSlice"
+import { newPost } from "../../../store/postSlice";
 import { useSelector, useDispatch } from "react-redux";
 
 export const PostInput = () => {
+  let initialData = { content: "", comments: [], uploadedImage: "" };
+  const [contentData, setContentData] = useState(initialData);
+  // const [imageFileValue, setImageFileValue] = useState(null);
 
-  let initialData = {content:"", comments:[]}
-  const [contentData, setContentData] = useState(initialData)
-
-  const { token } = useSelector(store=>store.auth)
+  const { token } = useSelector((store) => store.auth);
   const navigate = useNavigate();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const formSubmitHandler = async (e) => {
     e.preventDefault();
@@ -22,14 +22,32 @@ export const PostInput = () => {
     }
 
     try {
-      dispatch(newPost({
-        encodedToken: token,
-        postData: contentData
-      }))
-      setContentData(initialData)
+      if (contentData.content !== "" || contentData.uploadedImage !== "") {
+        dispatch(
+          newPost({
+            encodedToken: token,
+            postData: contentData,
+          })
+        );
+        setContentData(initialData);
+      }
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const onFileChange = async (e) => {
+    const file = e.target.files[0];
+    const toBase64 = (file) =>
+      new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = (error) => reject(error);
+      });
+
+    let base64File = await toBase64(file);
+    setContentData({ ...contentData, uploadedImage: base64File });
   };
 
   return (
@@ -49,14 +67,42 @@ export const PostInput = () => {
                 className="post-input-summary-input"
                 placeholder="Text here..."
                 name="content"
-                onChange={(e) => setContentData({ ...contentData, content: e.target.value })}
+                onChange={(e) =>
+                  setContentData({ ...contentData, content: e.target.value })
+                }
                 value={contentData.content}
               />
+              {contentData.uploadedImage ? (
+                <div className="relative image-upload-container">
+                  <img
+                    src={contentData.uploadedImage}
+                    alt="uploadedImage"
+                    className="img-responsive"
+                  />
+                  <i
+                    onClick={() => {
+                      setContentData({ ...contentData, uploadedImage: "" });
+                    }}
+                    className="fas fa-times-circle"
+                  ></i>
+                </div>
+              ) : null}
             </div>
             <div className="post-input-button-container">
               <div className="post-input-button-left">
-                <i className="fa-regular fa-image"></i>
-                <i className="fa-regular fa-face-smile-beam"></i>
+
+                <div className="image-upload-button-container relative">
+                  <i className="fa-regular fa-image"></i>
+                  <input
+                    id="image-file-upload"
+                    className="image-file-upload-input-box"
+                    accept="image/apng, image/avif, image/gif, image/jpeg, image/png, image/svg+xml, image/jpg,image/webp"
+                    type="file"
+                    onChange={onFileChange}
+                  />
+                </div>
+
+
               </div>
               <div className="post-input-button-right">
                 <button

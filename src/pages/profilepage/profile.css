@@ -16,6 +16,10 @@
     width: 100%;
 }
 
+.profilepicture-wrapper .avatar{
+    border: 1px solid grey;
+}
+
 .profile-name-username-container{
     margin-top: 1rem;
 }

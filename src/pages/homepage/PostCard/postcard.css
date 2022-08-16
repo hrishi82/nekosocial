@@ -123,6 +123,7 @@
     border: 1px solid black;
     width: max-content;
     box-shadow: rgba(99, 99, 99, 0.8) 0px 2px 8px 0px;
+    background-color: var(--card-bg);
   }
 
 .post-options-modal-options{
