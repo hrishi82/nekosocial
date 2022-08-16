@@ -4,6 +4,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutHandler } from "../../../store/authenticationSlice";
 import {toggleCommentInputModal} from "../../../store/postSlice"
+import {resetFormData} from "../../../store/utilitiesSlice"
 
 export const LeftAsideBar = () => {
   const { token, user } = useSelector(store => store.auth)
@@ -18,6 +19,7 @@ export const LeftAsideBar = () => {
 
   const addPostHandler = () =>{
     dispatch(toggleCommentInputModal());
+    dispatch(resetFormData())
   }
 
   return (

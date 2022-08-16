@@ -88,6 +88,14 @@
     padding: 0.7rem 1.5rem;
 }
 
+.upload-profile-image-icon-wrapper .image-upload-button-container{
+    margin: 0;
+    cursor: pointer;
+}
+.upload-profile-image-icon-wrapper input{
+    cursor: pointer;
+}
+
 
 
 

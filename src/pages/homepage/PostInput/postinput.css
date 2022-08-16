@@ -49,6 +49,11 @@
     justify-content: space-between;
 }
 
+.post-input-button-left{
+    display: flex;
+    justify-content: flex-start;
+}
+
 
 .post-input-button-left > i{
     margin-right: 1.3rem;
@@ -59,3 +64,6 @@
 .post-input-post-comment-btn{
     padding: 0.4rem 1rem; 
 }
+
+
+

@@ -13,7 +13,7 @@ return (
     <LeftAsideBar />
     <div className="mainfeed-container">
         <div className="mainfeed-info-action-container">
-            <p className="mainfeed-info-text">Bookmarks</p>
+            <p className="mainfeed-info-text">{user?.bookmarks.length === 0 ? "No bookmarked posts" : "Bookmarks"}</p>
         </div>
         {user?.bookmarks.map(postID=><PostCard key={postID} data={getPostData(postID)} />)}
     </div>

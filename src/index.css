@@ -48,6 +48,7 @@
 
   /* Outline */
   --outline-color: rgb(91, 91, 91);
+
 }
 
 html {
@@ -182,6 +183,59 @@ body {
   outline: transparent;
   border: transparent;
 }
+
+
+
+/* img */
+
+/* Image upload */
+
+.modal-footer-wrapper{
+  display: flex;
+}
+
+
+.image-upload-button-container{
+  display: flex;
+  margin-right: 1.5rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.image-file-upload-input-box{
+  /* visibility: hidden; */
+  opacity: 0;
+  width: 1.2rem;
+  position: absolute;  
+}
+
+.image-upload-container{
+  max-height: 10rem;
+  max-width: 10rem;
+  overflow: hidden;
+}
+
+.image-upload-container .img-responsive{
+  height: 100%;
+}
+
+.image-upload-container .fa-times-circle{
+  position: absolute;
+  z-index: 2;
+  top: 0.5rem;
+  right: 0.5rem;
+  background-color: black;
+  color: white;
+  border-radius: 5rem;
+  overflow: hidden;
+  font-size: 1.2rem;
+
+}
+
+
+
+
+
 
 /******** Responsive media queries ********/
 

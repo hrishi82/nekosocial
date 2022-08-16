@@ -21,6 +21,12 @@
     /* border: 1px solid black; */
 }
 
+.all-post-loader-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .add-posts-notif{
   margin-top: 3rem;
 }

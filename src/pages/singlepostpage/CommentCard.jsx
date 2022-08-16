@@ -28,7 +28,8 @@ export const CommentCard = ({ data, postInfo }) => {
     updatedAt,
     _id,
     text,
-    commentData
+    commentData,
+    uploadedImage,
   } = data;
 
   useEffect(()=>{

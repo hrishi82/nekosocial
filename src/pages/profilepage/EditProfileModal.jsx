@@ -8,24 +8,46 @@ import { editUserProfile } from "../../../src/store/authenticationSlice";
 export const EditProfileModal = ({ displayEditModal, setDisplayEditModal }) => {
   const { token, user } = useSelector((store) => store.auth);
   const { posts } = useSelector((store) => store.posts);
-  const [profileFormData, setProfileFormData] = useState(user)
+  const [profileFormData, setProfileFormData] = useState(user);
+  const [isNewImage, setIsNewImage] = useState(false);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const formSubmitHandler = async (e) => {
     e.preventDefault();
-    dispatch(editUserProfile({userData: profileFormData, encodedToken: token}))
+
+    if (isNewImage) {
+      setIsNewImage(false);
+    }
+
+    dispatch(
+      editUserProfile({ userData: profileFormData, encodedToken: token })
+    );
     setDisplayEditModal(!displayEditModal);
   };
 
-  useEffect(()=>{
-    setProfileFormData(user)
-  }, [user])
-
+  useEffect(() => {
+    setProfileFormData(user);
+  }, [user]);
 
   const handleFormData = (e) => {
     setProfileFormData({ ...profileFormData, [e.target.name]: e.target.value });
+  };
+
+  const onFileChange = async (e) => {
+    const file = e.target.files[0];
+    const toBase64 = (file) =>
+      new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = (error) => reject(error);
+      });
+
+    let base64File = await toBase64(file);
+    setProfileFormData({ ...profileFormData, profilePicture: base64File });
+    setIsNewImage(true);
   };
 
   return (
@@ -46,17 +68,38 @@ export const EditProfileModal = ({ displayEditModal, setDisplayEditModal }) => {
           <div className="card editProfile-card">
             <section className="editProfile-card-body-container">
               <div className="profilepicture-wrapper relative">
-                <img
-                  src={
-                    user?.profilePicture
-                      ? user?.profilePicture
-                      : "https://res.cloudinary.com/dac2rwutk/image/upload/v1652162986/cat_ij5wno.jpg"
-                  }
-                  className="avatar avatar-size-lg"
-                  alt="avatar"
-                />
+                {isNewImage ? (
+                  <img
+                    src={
+                      profileFormData?.profilePicture
+                        ? profileFormData?.profilePicture
+                        : "https://res.cloudinary.com/dac2rwutk/image/upload/v1652162986/cat_ij5wno.jpg"
+                    }
+                    className="avatar avatar-size-lg"
+                    alt="avatar"
+                  />
+                ) : (
+                  <img
+                    src={
+                      user?.profilePicture
+                        ? user?.profilePicture
+                        : "https://res.cloudinary.com/dac2rwutk/image/upload/v1652162986/cat_ij5wno.jpg"
+                    }
+                    className="avatar avatar-size-lg"
+                    alt="avatar"
+                  />
+                )}
                 <div className="upload-profile-image-icon-wrapper absolute">
-                  <i className="fas fa-camera"></i>
+                  <div className="image-upload-button-container relative">
+                    <i className="fas fa-camera"></i>
+                    <input
+                      id="image-file-upload"
+                      className="image-file-upload-input-box"
+                      accept="image/apng, image/avif, image/gif, image/jpeg, image/png, image/svg+xml, image/jpg,image/webp"
+                      type="file"
+                      onChange={onFileChange}
+                    />
+                  </div>
                 </div>
               </div>
 

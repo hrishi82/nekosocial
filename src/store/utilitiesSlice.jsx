@@ -5,7 +5,8 @@ import en from 'javascript-time-ago/locale/en.json'
 const initialState = {
     formData: {
         content:"",
-        comments:[]
+        comments:[],
+        uploadedImage:"",
       },
     singlePostPageComment: false,
     postInformation: '',
@@ -32,7 +33,8 @@ const utilitiesSlice = createSlice({
         resetFormData: (state)=>{
             state.formData = {
                 content:"",
-                comments:[]
+                comments:[],
+                uploadedImage:"",
               }
         },
 
