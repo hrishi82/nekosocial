@@ -38,6 +38,7 @@ export const signupHandler = function (schema, request) {
       updatedAt: formatDate(),
       username,
       password,
+      profilePicture:'',
       ...rest,
       followers: [],
       following: [],

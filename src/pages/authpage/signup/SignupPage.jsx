@@ -60,7 +60,6 @@ export const SignupPage = () => {
           ...authInputError,
           errorMessage: "Please provide proper input",
         });
-        // ToastHandler("error", "Please enter valid username and password");
       }
     } catch (err){
       console.log(err)
@@ -74,8 +73,6 @@ export const SignupPage = () => {
       username: fakesignupdata.username,
       password: fakesignupdata.password,
     };
-
-    console.log(dummySignupData)
 
     const { firstName, lastName, username, password } = dummySignupData;
 
@@ -116,18 +113,6 @@ export const SignupPage = () => {
   }
 
   const signupUser = async (firstName, lastName, username, password) => {
-    // try {
-    //   dispatch(
-    //     signupHandler({
-    //       username: signupForm.username,
-    //       password: signupForm.password,
-    //       firstName: signupForm.firstName,
-    //       lastName: signupForm.lastName,
-    //     })
-    //   );
-    // } catch (error) {
-    //   console.error(error);
-    // }
 
     try {
       dispatch(

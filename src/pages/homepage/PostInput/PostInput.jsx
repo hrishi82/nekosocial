@@ -8,9 +8,14 @@ import { useSelector, useDispatch } from "react-redux";
 export const PostInput = () => {
   let initialData = { content: "", comments: [], uploadedImage: "" };
   const [contentData, setContentData] = useState(initialData);
+  const [userData, setUserData] = useState(null);
+
   // const [imageFileValue, setImageFileValue] = useState(null);
 
-  const { token } = useSelector((store) => store.auth);
+
+  const { token, user } = useSelector((store) => store.auth);
+  const { users } = useSelector((store) => store.users || {});
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -36,6 +41,15 @@ export const PostInput = () => {
     }
   };
 
+
+
+  useEffect(() => {
+    setUserData(
+      users.filter((eachuser) => eachuser.username === user.username)[0]
+    );
+  }, [users, user]);
+  
+
   const onFileChange = async (e) => {
     const file = e.target.files[0];
     const toBase64 = (file) =>
@@ -56,8 +70,11 @@ export const PostInput = () => {
         <div className="post-input-container">
           <div className="post-input-avtar-box">
             <img
-              src="https://res.cloudinary.com/dac2rwutk/image/upload/v1652162986/cat_ij5wno.jpg"
-              className="avatar avatar-size-sm"
+          src={
+            userData?.profilePicture
+              ? userData?.profilePicture
+              : "https://res.cloudinary.com/dac2rwutk/image/upload/v1660390827/user_xotqed.png"
+          }              className="avatar avatar-size-sm"
               alt="avatar"
             />
           </div>

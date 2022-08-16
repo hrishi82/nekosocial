@@ -74,6 +74,12 @@
     justify-content: flex-start;
 }
 
+.right-sidebar-suggestion-container{
+    max-height: 20rem;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
 .sidebar-explore-container{
     margin-top: 1rem;
     border: 1px solid var(--grey-bg);

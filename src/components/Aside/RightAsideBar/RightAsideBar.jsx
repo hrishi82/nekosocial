@@ -43,7 +43,7 @@ export const RightAsideBar = () => {
     <aside className="sidebar right-sidebar">
       <SearchBar/>
       {peopleNotFollowed?.length !== undefined && peopleNotFollowed?.length > 0 && <div className="sidebar-explore-container">
-        <ul>
+        <ul className="right-sidebar-suggestion-container">
           {peopleNotFollowed?.length !== undefined && peopleNotFollowed.map(el=>{
             return(
               <li key={el?.username} className="sidebar-explore-list-item">

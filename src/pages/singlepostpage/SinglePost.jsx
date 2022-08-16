@@ -72,7 +72,7 @@ export const SinglePost = ({ singlepostdata }) => {
                     src={
                         postUserData?.profilePicture
                         ? postUserData.profilePicture
-                        : "https://res.cloudinary.com/dac2rwutk/image/upload/v1652162986/cat_ij5wno.jpg"
+                        : "https://res.cloudinary.com/dac2rwutk/image/upload/v1660390827/user_xotqed.png"
                     }
                     className="avatar avatar-size-sm"
                     alt="avatar"
