@@ -108,10 +108,10 @@ export const CommentCard = ({ data, postInfo }) => {
         <div
           className={"post-content-buttons-box post-content-buttons-right"}
         >
-            <>
+            {/* <>
               <i className="fas fa-arrow-up"></i>
               <i className="fas fa-arrow-down" onClick={()=>console.log(data)}></i>
-            </>
+            </> */}
         </div>
       </div>
     </div>

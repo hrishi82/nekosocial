@@ -101,7 +101,7 @@ export const LeftAsideBar = () => {
           </NavLink>
         </li>
 
-        <li className="sidebar-li-item">
+        <li className="sidebar-li-item aside-newpost-btn-li">
           <button
             className="btn btn-primary aside-newpost-btn"
             onClick={addPostHandler}

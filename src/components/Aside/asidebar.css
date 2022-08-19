@@ -59,6 +59,9 @@
     margin-top: 1rem;
     width: 100%;
 }
+.aside-newpost-btn-li:hover{
+    background-color: transparent;
+}
 
 
 

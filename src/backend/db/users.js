@@ -94,7 +94,16 @@ export const users = [
     bio: "Frontend developer | Football",
     link: "https://www.google.com/",
     following: [],
-    followers:[]
+    followers:[
+      {
+        _id: "user2-kdcbhaskdjbvahkasdbv",
+        firstName: "John",
+        lastName: "Doe",
+        username: "JohnDoe",
+        profilePicture:
+          "https://res.cloudinary.com/dac2rwutk/image/upload/v1652162986/cat_ij5wno.jpg",
+      }
+    ]
   },
   {
     _id: "user4-kjandsknvlasdkvnalkdsav",

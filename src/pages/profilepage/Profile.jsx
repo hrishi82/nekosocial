@@ -13,6 +13,7 @@ import {followUser, unfollowUser} from "../../store/userSlice"
 
 export const Profile = () => {
   const [displayEditModal, setDisplayEditModal] = useState(false);
+  const [currentUserPosts, setCurrentUserPosts] = useState([])
   const { username } = useParams();
 
   const dispatch = useDispatch();
@@ -20,21 +21,26 @@ export const Profile = () => {
     (store) => store.posts
   );
 
-  
-
   const { users } = useSelector((store) => store.users);
   const { user, token } = useSelector((store) => store.auth);
   const { currUserDetails, userPosts } = useSelector((store) => store.profile);
 
   const currentUserDetails = users?.find((user) => user.username === username);
   
-  const isFollowed = () => currentUserDetails?.followers?.some((el) => el?.username === user?.username);
+  // const isFollowed = () => currentUserDetails?.followers?.some((el) => el?.username === user?.username);
+
+  const isFollowed = () => user?.following?.some((el) => el?.username === currentUserDetails?.username);
+
 
   useEffect(()=>{
-    dispatch(getUserDetails(username))
-    dispatch(getUserPosts(username))
+    // dispatch(getUserDetails(username))
+    // dispatch(getUserPosts(username))
     dispatch(getAllUsers())
-}, [username, dispatch, user])
+}, [username, dispatch ])
+
+useEffect(()=>{
+  setCurrentUserPosts(posts.filter((el)=>el.username === currentUserDetails.username))
+}, [currentUserDetails, posts])
 
   const followUnfollowHandlerFunc = () =>{
     if(isFollowed()){
@@ -120,7 +126,7 @@ export const Profile = () => {
               <h4 className="profile-stat-name">Following</h4>
             </div>
             <div className="profile-stat-wrapper">
-              <h4 className="profile-stat-number">{userPosts?.length}</h4>
+              <h4 className="profile-stat-number">{currentUserPosts?.length}</h4>
               <h4 className="profile-stat-name">Posts</h4>
             </div>
             <div className="profile-stat-wrapper">
@@ -131,10 +137,10 @@ export const Profile = () => {
         </section>
         <section className="profile-posts-container">
           <h3 className="profile-posts-title text-left">
-            Posts: {userPosts?.length}
+            Posts: {currentUserPosts?.length}
           </h3>
           <div className="profile-posts-wrapper">
-            {userPosts?.map((el) => (
+            {currentUserPosts?.map((el) => (
               <PostCard key={el._id} data={el} />
             ))}
           </div>

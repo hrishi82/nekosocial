@@ -23,7 +23,7 @@
 }
 
 .card-topic-summary{
-    margin: 1.5rem 0 0.5rem 0;
+    margin: 0.5rem 0 0.5rem 0;
     width: 100%;
     font-size: 1.1rem;
     border-radius: 0.4rem;
@@ -82,6 +82,13 @@
       display: block;
   }
 
+
+
+.modal-close-icon-container{
+    text-align: right;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
  
 
 

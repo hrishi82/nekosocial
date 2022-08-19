@@ -9,6 +9,7 @@ import {
 } from "../../../store/postSlice";
 import { setFormData, resetFormData } from "../../../store/utilitiesSlice";
 
+
 export const NewPostModal = () => {
   const { token } = useSelector((store) => store.auth);
   const { posts, displayCommentInputModal } = useSelector(
@@ -81,6 +82,9 @@ export const NewPostModal = () => {
       >
         <form onSubmit={(e) => formSubmitHandler(e)}>
           <div className="card">
+            <div className="modal-close-icon-container"  onClick={() => dispatch(toggleCommentInputModal())}>
+              <i className="far fa-times-circle"></i>
+            </div>
             <section className="card-body-container">
               <p className="card-topic-summary">
                 <textarea

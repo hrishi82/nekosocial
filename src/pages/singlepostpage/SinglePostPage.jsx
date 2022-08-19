@@ -51,7 +51,7 @@ export const SinglePostPage = () => {
           <SinglePost singlepostdata={postInfo} />
           {commentsOfPost?.map((el) => (
             <CommentCard key={el._id} data={el} postInfo={postInfo}/>
-          ))}
+          )).reverse()}
         </div>
         <RightAsideBar />
       </div>

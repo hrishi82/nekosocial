@@ -49,6 +49,9 @@ export const EditCommentModal = () => {
           displayCommentInputModal ? "viewModal" : null
         }`}
       >
+        <div className="modal-close-icon-container"  onClick={() => dispatch(toggleCommentInputModal())}>
+              <i className="far fa-times-circle"></i>
+            </div>
         <form onSubmit={(e) => formSubmitHandler(e)}>
           <div className="card">
             <section className="card-body-container">
